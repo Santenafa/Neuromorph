@@ -1,10 +1,10 @@
 using Neuromorph.Interfaces;
 using UnityEngine;
 
-namespace Neuromorph
+namespace Neuromorph.Components
 {
     [RequireComponent(typeof(CharacterController))]
-    public class HostController : MonoBehaviour
+    public class MovementComponent : BaseComponent
     {
         [SerializeField] private CharacterStatsSO _stats;
         //Walk
@@ -14,7 +14,7 @@ namespace Neuromorph
         private float _currentVelocity; 
         private Transform _camera;
         //Gravity
-        private bool _isGrounded => _controller.isGrounded; 
+        private bool IsGrounded => _controller.isGrounded; 
         private const float Gravity = -9.81f;
         private float _gravityVelocity;
         
@@ -35,7 +35,7 @@ namespace Neuromorph
         }
         
         private void ApplyGravity() {
-            if (_isGrounded && _gravityVelocity < 0f) {
+            if (IsGrounded && _gravityVelocity < 0f) {
                 _gravityVelocity = -1f;
             } else {
                 _gravityVelocity += Gravity * _stats.GravityMultiplier * Time.deltaTime;
@@ -59,18 +59,16 @@ namespace Neuromorph
         }
         
         public void Jump() {
-            if (!_isGrounded) return;
+            if (!IsGrounded) return;
             
             _gravityVelocity += _stats.JumpPower;
         }
 
         public void Interact() {
-            if (! Physics.Raycast(
-                    transform.position, Vector3.forward,
-                    out RaycastHit hitInfo, _stats.InteractRange)
-                ) return;
+            if (!Physics.Raycast( _controller.bounds.center, transform.forward,
+                out RaycastHit hitInfo, _stats.InteractRange)) return;
             
-            hitInfo.collider.GetComponent<IInteractable>()?.Interact();
+            hitInfo.collider.GetComponent<DialogueComponent>()?.StartDialogue();
         }
     }
 }

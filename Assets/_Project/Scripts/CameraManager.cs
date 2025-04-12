@@ -6,8 +6,13 @@ namespace Neuromorph
 {
     public class CameraManager : Singleton<CameraManager>
     {
-        [SerializeField] private CinemachineVirtualCamera _vcam;
+        [SerializeField] private CinemachineFreeLook _vCameraWorld;
+        [SerializeField] private CinemachineVirtualCamera _vCameraBrain;
 
+        public void FollowPuppet(Puppet puppet) {
+            _vCameraWorld.Follow = puppet.transform;
+            _vCameraWorld.LookAt = puppet.transform;
+        }
         /*private void OnEnable() => 
             EventBus.OnPlayerCreated += SetupCamera;
         private void OnDisable() =>
