@@ -13,8 +13,10 @@ namespace Neuromorph.Dialogues
         [SerializeField] private Animator _dialogueAnimator;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private TMP_Text _dialogueText;
+        
         private readonly Queue<string> _sentences = new();
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
+        
         public void StartDialogue(Dialogue dialogue)
         {
             _dialogueAnimator.SetBool(IsOpen, true);
