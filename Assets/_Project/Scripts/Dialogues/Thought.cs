@@ -5,28 +5,30 @@ namespace Neuromorph.Dialogues
 {
     public class Thought : MonoBehaviour
     {
-        [SerializeField] private string _textValue = "Nothing";
+        public Collider2D Collider => _collider2D;
+        [SerializeField] private ThoughtSO _data;
         [SerializeField] private TMP_Text _thoughtText;
-        private Collider2D _collider2D;
+        [SerializeField] private  Collider2D _collider2D;
         private readonly Collider2D[] _endDragOverlapColliders = new Collider2D[10];
+        private Rigidbody2D _rBody;
         private Vector3 _mouseOffset;
 
         private void Awake()
         {
-            _collider2D = GetComponent<Collider2D>();
-            _thoughtText.text = _textValue;
+            _rBody = GetComponent<Rigidbody2D>();
         }
-        
+
         private void OnMouseDown()
         {
             _mouseOffset = transform.position - GetMousePos();
-            transform.position = GetMousePos() + _mouseOffset;
+            //transform.position = GetMousePos() + _mouseOffset;
+            _rBody.MovePosition(GetMousePos() + _mouseOffset);
         }
 
         private void OnMouseDrag()
         {
-            transform.position = GetMousePos() + _mouseOffset;
-            
+            //transform.position = GetMousePos() + _mouseOffset;
+            _rBody.MovePosition(GetMousePos() + _mouseOffset);
         }
         
         private void OnMouseUp()
@@ -45,6 +47,13 @@ namespace Neuromorph.Dialogues
                     thought.Highlight();
                 }
             }*/
+        }
+
+        public void Init(ThoughtSO data, Vector2 position)
+        {
+            _data = data;
+            _thoughtText.text = _data.TextValue;
+            transform.position = position;
         }
 
         private void Highlight()

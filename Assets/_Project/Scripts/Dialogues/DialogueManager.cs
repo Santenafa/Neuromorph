@@ -14,12 +14,14 @@ namespace Neuromorph.Dialogues
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private TMP_Text _dialogueText;
         
+        private Dialogue _currentDialogue;
         private readonly Queue<string> _sentences = new();
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
         
         public void StartDialogue(Dialogue dialogue)
         {
             _dialogueAnimator.SetBool(IsOpen, true);
+            _currentDialogue = dialogue;
             //_dialogueCanvas.gameObject.SetActive(true);
             _nameText.text = dialogue.Name;
             _sentences.Clear();
@@ -56,6 +58,7 @@ namespace Neuromorph.Dialogues
         {
             _dialogueAnimator.SetBool(IsOpen, false);
             //_dialogueCanvas.gameObject.SetActive(false);
+            BrainManager.Instance.SpawnThought(_currentDialogue.ThoughtToSpawn);
         }
     }
 }

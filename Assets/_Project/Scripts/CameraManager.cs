@@ -42,5 +42,10 @@ namespace Neuromorph
             Vector3 mousePosition = MainCamera.ScreenToWorldPoint(Input.mousePosition);
             return new Vector3(mousePosition.x, mousePosition.y, 0f);
         }
+        
+        public bool IsInsideBrainUI(){
+            Vector3 mousePos = _cameraBrain.ScreenToViewportPoint(Input.mousePosition);
+            return mousePos.x <= 1f;
+        }
     }
 }
