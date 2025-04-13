@@ -8,6 +8,6 @@ namespace Neuromorph.Dialogues
         [Header("---------- Data ----------")][Tooltip("")]
         public string TextValue = "Nothing";
         
-        public string Dialogue = "Nothing";
+        public Dialogue Dialogue;
     }
 }

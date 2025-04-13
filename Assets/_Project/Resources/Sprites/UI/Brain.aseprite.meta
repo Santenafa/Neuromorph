@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9db4c056764f7514aae1b54a87fb6bfe
+guid: b87da97c2ca670b4a8b63dcea3b60458
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -98,7 +98,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638801698075744116
+  platformSettingsDirtyTick: 638801778051668363
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,18 +122,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: cursor
+  - name: Brain
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.50282484, y: -0.05797101}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 32
-      height: 32
-    spriteID: 1011b73032fa21843b9a11c23f951c88
+      width: 177
+      height: 138
+    spriteID: 069b24647b888e443bed33cc2e70ef5e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -143,38 +143,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
   spriteSheetImportData:
-  - name: cursor_world
+  - name: Brain_0
     originalName: 
-    pivot: {x: 0, y: 1}
-    alignment: 1
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 16
-      height: 16
-    spriteID: 5952e97094ac93c4887973099222910e
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: cursor_brain
-    originalName: 
-    pivot: {x: 0, y: 1}
-    alignment: 1
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 16
-      y: 0
-      width: 16
-      height: 16
-    spriteID: 70f2ae2fcd03d1f408084f4d080737eb
+      width: 177
+      height: 138
+    spriteID: b12114b46ca6a65469c768b80c3ad5cd
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -186,25 +166,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 2941470896
+      value0: 829020318
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: cursor
+    name: Brain
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: cursor
+    - name: Brain
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 0
-        y: 1
-        width: 32
-        height: 15
-      spriteId: 1011b73032fa21843b9a11c23f951c88
+        x: 15
+        y: 8
+        width: 177
+        height: 138
+      spriteId: 069b24647b888e443bed33cc2e70ef5e
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -271,5 +251,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 32, y: 16}
-  previousTextureSize: {x: 32, y: 16}
+  canvasSize: {x: 208, y: 160}
+  previousTextureSize: {x: 256, y: 256}

@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: Hungry
   m_EditorClassIdentifier: 
   TextValue: Hungry
-  Dialogue: I want to eat...
+  Dialogue:
+    Name: Me
+    Sentences: []
+    ThoughtToSpawn: {fileID: 0}
