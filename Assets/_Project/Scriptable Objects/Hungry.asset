@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265450bd742b4e98b12d4d169b121820, type: 3}
   m_Name: Hungry
   m_EditorClassIdentifier: 
-  TextValue: Hungry
+  NameValue: Hungry
+  PromoText: Stomach growls...
   TriggeredDialogue:
     Name: Me
     Sentences:
-    - Text: I want to eat...
+    - Text: I want to eat.
       DialogueEvent:
         ThoughtToSpawn: {fileID: 11400000, guid: 20453f0c00c6af04fb2ea790323590f1,
           type: 2}
