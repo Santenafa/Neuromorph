@@ -5,6 +5,7 @@ namespace Neuromorph.Dialogues
 {
     public class Thought : MonoBehaviour
     {
+        public ThoughtSO ThoughtData => _data;
         public Collider2D Collider => _collider2D;
         [SerializeField] private ThoughtSO _data;
         [SerializeField] private TMP_Text _thoughtText;
@@ -33,12 +34,12 @@ namespace Neuromorph.Dialogues
         
         private void OnMouseUp()
         {
-            _collider2D.enabled = false;
+            //_collider2D.enabled = false;
             int size = Physics2D.OverlapBoxNonAlloc(
                 transform.position, _collider2D.bounds.size,
                 0f,_endDragOverlapColliders
             );
-            _collider2D.enabled = true;
+            //_collider2D.enabled = true;
 
             if (size <= 0) return;
             
@@ -52,7 +53,7 @@ namespace Neuromorph.Dialogues
         public void Init(ThoughtSO data, Vector2 position)
         {
             _data = data;
-            _thoughtText.text = _data.TextValue;
+            _thoughtText.text = _data.NameValue;
             transform.position = position;
         }
 

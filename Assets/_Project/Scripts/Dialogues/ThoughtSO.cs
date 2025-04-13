@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Neuromorph.Dialogues
 {
@@ -6,8 +7,9 @@ namespace Neuromorph.Dialogues
     public class ThoughtSO : ScriptableObject
     {
         [Header("---------- Data ----------")][Tooltip("")]
-        public string TextValue = "Nothing";
+        public string NameValue = "Nothing";
+        public string PromoText = "I want nothing...";
         
-        public Dialogue Dialogue;
+        public Dialogue TriggeredDialogue;
     }
 }

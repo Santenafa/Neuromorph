@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Hungry
   m_EditorClassIdentifier: 
   TextValue: Hungry
-  Dialogue:
+  TriggeredDialogue:
     Name: Me
-    Sentences: []
-    ThoughtToSpawn: {fileID: 0}
+    Sentences:
+    - Text: I want to eat...
+      DialogueEvent:
+        ThoughtToSpawn: {fileID: 11400000, guid: 20453f0c00c6af04fb2ea790323590f1,
+          type: 2}
+    IsAwaitingThought: 0

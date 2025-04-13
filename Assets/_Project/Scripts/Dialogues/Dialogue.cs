@@ -4,8 +4,7 @@ namespace Neuromorph.Dialogues
     public class Dialogue
     {
         public string Name;
-        [UnityEngine.TextArea(3, 10)]
-        public string[] Sentences;
-        public ThoughtSO ThoughtToSpawn;
+        public Sentence[] Sentences;
+        public bool IsAwaitingThought;
     }
 }
