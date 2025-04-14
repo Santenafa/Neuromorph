@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Neuromorph.Utilities;
 
@@ -9,15 +10,15 @@ namespace Neuromorph.Dialogues
         {
             get => _chosenThought; set {
                 _chosenThought = value;
-                DialogueManager dialogueManager = DialogueManager.Instance;
-                if (dialogueManager.State == DialogueManager.DialogueState.AwaitThought)
-                    dialogueManager.DisplayThought(_chosenThought);
+                if (DialogueManager.Instance.State == DialogueState.AwaitThought)
+                    DialogueManager.DisplayThought(_chosenThought);
             }
         }
         private Thought _chosenThought;
         [SerializeField] private Thought _thoughtPrefab;
         [SerializeField] private Collider2D _spawnCollider;
         [SerializeField] private Transform _spawnPoint;
+        private readonly List<Thought> _thoughtsInMouth = new();
         private Bounds SpawnBounds => _spawnCollider.bounds;
 
         public void SpawnThought(ThoughtSO data)
@@ -30,6 +31,18 @@ namespace Neuromorph.Dialogues
             float x = Random.Range(SpawnBounds.min.x, SpawnBounds.max.x - thoughtBounds.size.x); 
             float y = Random.Range(SpawnBounds.min.y + thoughtBounds.size.y, SpawnBounds.max.y);
             thought.Init(data, new Vector2(x, y));
+        }
+
+        public void AddInMouth(Thought thought)
+        {
+            _thoughtsInMouth.Add(thought);
+            ChosenThought = _thoughtsInMouth[0];
+        }
+        
+        public void RemoveFromMouth(Thought thought)
+        {
+            _thoughtsInMouth.Remove(thought);
+            ChosenThought = _thoughtsInMouth.Count > 0 ? _thoughtsInMouth[0] : null;
         }
 
         public void DestroyThought(Thought thought)

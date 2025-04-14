@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Neuromorph.Dialogues.Events;
 using Neuromorph.Utilities;
 using UnityEngine;
 using TMPro;
@@ -18,13 +16,8 @@ namespace Neuromorph.Dialogues
         [SerializeField] private Animator _dialogueAnimator;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private TMP_Text _dialogueText;
+        
         private const string ChooseText = "[Choose your Thought]";
-
-
-        public enum DialogueState
-        {
-            NotActive, AwaitClick, Typing, TransitionToAwaitThought, AwaitThought, Ended
-        }
         private Sentence _currentSentence;
         private Dialogue _currentDialogue;
         private readonly Queue<Sentence> _sentences = new();
@@ -70,10 +63,10 @@ namespace Neuromorph.Dialogues
             if (_sentences.Count > 0) DisplayNextSentence();
         }
 
-        public void DisplayThought(Thought thought)
+        public static void DisplayThought(Thought thought)
         {
             string displayText = thought ? thought.ThoughtData.PromoText : ChooseText;
-            _dialogueText.text = $"<color={GameColor.BRAIN}>{displayText}</color>";
+            Instance._dialogueText.text = $"<color={GameColor.BRAIN}>{displayText}</color>";
         }
         
         private void DisplayNextSentence()
@@ -134,5 +127,9 @@ namespace Neuromorph.Dialogues
         }
         
         private void SetState(DialogueState newState) => State = newState;
+    }
+    
+    public enum DialogueState {
+        NotActive, AwaitClick, Typing, TransitionToAwaitThought, AwaitThought, Ended
     }
 }

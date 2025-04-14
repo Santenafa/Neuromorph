@@ -1,4 +1,3 @@
-using Neuromorph.Interfaces;
 using UnityEngine;
 
 namespace Neuromorph.Components
