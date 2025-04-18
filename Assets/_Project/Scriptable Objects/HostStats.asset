@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993f9c13b025c504885beda7f00772f0, type: 3}
   m_Name: HostStats
   m_EditorClassIdentifier: 
-  WalkSpeed: 6
-  RotationSmoothTime: 0.05
-  JumpPower: 15
+  WalkSpeed: 4
+  RotationSmoothTime: 0.1
+  JumpPower: 8
   GravityMultiplier: 3
   InteractRange: 10

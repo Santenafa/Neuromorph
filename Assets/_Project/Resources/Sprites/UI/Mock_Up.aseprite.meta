@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 612f803940f17ef47b8a05f2b07df99a
+guid: c0f94fd6c0f636e4b8340d2552c4e8cb
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ ScriptedImporter:
     sRGBTexture: 1
     spriteMode: 2
     spriteExtrude: 1
-    spriteMeshType: 0
+    spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
     spritePixelsToUnits: 32
@@ -78,7 +78,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 0
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -91,14 +91,14 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 0
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638805842538523402
+  platformSettingsDirtyTick: 638805822962842341
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -143,18 +143,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
   spriteSheetImportData:
-  - name: thought
+  - name: Dialogue_Box_0
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
-    border: {x: 5, y: 0, z: 5, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 0
-      y: 0
-      width: 32
-      height: 16
-    spriteID: 5adc4dcb8e673194690b84427bb99fb7
+      x: 260
+      y: 4
+      width: 384
+      height: 168
+    spriteID: 4cfb59a11ffa9054a9d722496763d0f5
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -166,25 +166,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 2941470896
+      value0: 306298850
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: cursor
-    layerFlags: 0
+    name: Dialogue_Box
+    layerFlags: 3
     layerType: 0
     blendMode: 0
     cells:
-    - name: thought
+    - name: Mock_Up
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
-        width: 32
-        height: 16
-      spriteId: 1011b73032fa21843b9a11c23f951c88
+        width: 640
+        height: 360
+      spriteId: c9b1c39169cb5ac4bbf53989f088bd62
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -251,5 +251,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 32, y: 16}
-  previousTextureSize: {x: 32, y: 16}
+  canvasSize: {x: 640, y: 360}
+  previousTextureSize: {x: 1024, y: 512}

@@ -47,6 +47,7 @@ namespace Neuromorph.Dialogues
 
         public void DestroyThought(Thought thought)
         {
+            RemoveFromMouth(thought);
             Destroy(thought.gameObject);
         }
     }

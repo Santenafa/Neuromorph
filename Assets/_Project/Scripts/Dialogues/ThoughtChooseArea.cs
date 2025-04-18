@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Neuromorph.Dialogues
@@ -16,7 +15,7 @@ namespace Neuromorph.Dialogues
         private void OnTriggerExit2D(Collider2D other)
         {
             if (other.TryGetComponent(out Thought thought))
-                BrainManager.Instance.RemoveFromMouth(thought);
+                BrainManager.Instance?.RemoveFromMouth(thought);
         }
     }
 }

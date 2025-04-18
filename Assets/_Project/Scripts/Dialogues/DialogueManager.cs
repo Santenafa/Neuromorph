@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Neuromorph.Utilities;
 using UnityEngine;
 using TMPro;
@@ -110,10 +111,9 @@ namespace Neuromorph.Dialogues
 
             if (_sentences.Count == 0)
             {
-                if (_currentDialogue.IsAwaitingThought) {
-                    SetState(DialogueState.TransitionToAwaitThought);
-                }
-                else SetState(DialogueState.Ended);
+                SetState(_currentDialogue.IsAwaitingThought
+                    ? DialogueState.TransitionToAwaitThought
+                    : DialogueState.Ended);
             }
             else SetState(DialogueState.AwaitClick);
         }
