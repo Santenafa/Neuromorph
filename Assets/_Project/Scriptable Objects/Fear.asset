@@ -15,7 +15,7 @@ MonoBehaviour:
   NameValue: Fear
   PromoText: I fear of...
   TriggeredDialogue:
-    Name: 
+    Name: Me
     Sentences:
     - Text: Darkness...
       DialogueEvent:

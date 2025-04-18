@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using DG.Tweening;
 using Neuromorph.Utilities;
 using UnityEngine;
 using TMPro;
@@ -12,9 +12,10 @@ namespace Neuromorph.Dialogues
     {
         public DialogueState State { get; private set; } = DialogueState.NotActive;
         [SerializeField] private float _textSpeed;
-        [SerializeField] private Canvas _dialogueCanvas;
+        [SerializeField] private RectTransform _dialoguePanel;
         [SerializeField] private Button _button;
         [SerializeField] private Animator _dialogueAnimator;
+        [SerializeField] private GameObject _nameBox;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private TMP_Text _dialogueText;
         
@@ -37,9 +38,9 @@ namespace Neuromorph.Dialogues
                 case DialogueState.AwaitClick: DisplayNextSentence(); break;
                 case DialogueState.Typing: SkipTyping(); break;
                 case DialogueState.Ended: EndDialogue(); break;
-                case DialogueState.TransitionToAwaitThought: 
-                    _nameText.text = "";
-                    _dialogueText.text = $"<color={GameColor.BRAIN}>{ChooseText}</color>";
+                case DialogueState.TransitionToAwaitThought:
+                    _nameBox.SetActive(false);
+                    _dialogueText.text = $"<color={GameColor.PARASITE}>{ChooseText}</color>";
                     SetState(DialogueState.AwaitThought);
                     break;
                 case DialogueState.AwaitThought: AcceptThought(); break;
@@ -53,8 +54,10 @@ namespace Neuromorph.Dialogues
             _currentDialogue = dialogue;
             
             _button.interactable = true;
+            
             _dialogueAnimator.SetBool(IsOpen, true);
             
+            _nameBox.SetActive(true);
             _nameText.text = _currentDialogue.Name;
             _sentences.Clear();
 
@@ -67,7 +70,7 @@ namespace Neuromorph.Dialogues
         public static void DisplayThought(Thought thought)
         {
             string displayText = thought ? thought.ThoughtData.PromoText : ChooseText;
-            Instance._dialogueText.text = $"<color={GameColor.BRAIN}>{displayText}</color>";
+            Instance._dialogueText.text = $"<color={GameColor.PARASITE}>{displayText}</color>";
         }
         
         private void DisplayNextSentence()
