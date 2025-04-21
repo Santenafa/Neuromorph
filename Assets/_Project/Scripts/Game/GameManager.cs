@@ -6,12 +6,30 @@ namespace Neuromorph
 {
     public class GameManager : Singleton<GameManager>
     {
-        public static event Action<GameState> OnBeforeStateChanged;
-        public static event Action<GameState> OnAfterStateChanged;
+        public IState State { get; private set; }
+        public Puppet Player;
+        public static event Action<IState> OnBeforeStateChanged;
+        public static event Action<IState> OnAfterStateChanged;
+        private StateMachine _stateMachine;
+        protected override void Awake()
+        {
+            base.Awake();
+            _stateMachine = new StateMachine();
+            var freeMoveState = new FreeMoveState(this);
+            var inDialogueState = new InDialogueState(this);
 
-        public GameState State { get; private set; }
-        
-        public void ChangeState(GameState newState)
+            AddTran(inDialogueState, freeMoveState, new FuncPredicate(() => true));
+            AddTran(freeMoveState, inDialogueState, new FuncPredicate(() => true));
+            
+            _stateMachine.SetInitialState(freeMoveState);
+        }
+
+        private void AddTran(IState from, IState to, IPredicate condition)
+            => _stateMachine.AddTransition(from, to, condition);
+        private void AddAnyTran(IState to, IPredicate condition)
+            => _stateMachine.AddAnyTransition(to, condition);
+
+        public void ChangeState(IState newState)
         {
             OnBeforeStateChanged?.Invoke(newState);
 
@@ -22,5 +40,6 @@ namespace Neuromorph
             
             Debug.Log($"New state: {newState}");
         }
+        
     }
 }

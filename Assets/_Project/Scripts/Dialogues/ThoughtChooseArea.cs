@@ -5,7 +5,6 @@ namespace Neuromorph.Dialogues
     [RequireComponent(typeof(Collider2D))]
     public class ThoughtChooseArea: MonoBehaviour
     {
-        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out Thought thought))
