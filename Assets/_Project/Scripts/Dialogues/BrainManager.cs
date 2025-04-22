@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Neuromorph.Utilities;
+using Random = UnityEngine.Random;
 
 namespace Neuromorph.Dialogues
 {
@@ -8,10 +9,10 @@ namespace Neuromorph.Dialogues
     {
         public Thought ChosenThought
         {
-            get => _chosenThought; set {
+            get => _chosenThought; private set {
                 _chosenThought = value;
-                if (DialogueManager.Instance.State == DialogueState.AwaitThought)
-                    DialogueManager.DisplayThought(_chosenThought);
+                if (_dialogueState.State == ConState.AwaitThought)
+                    _dialogueState.DisplayThought(_chosenThought);
             }
         }
         private Thought _chosenThought;
@@ -20,6 +21,12 @@ namespace Neuromorph.Dialogues
         [SerializeField] private Transform _spawnPoint;
         private readonly List<Thought> _thoughtsInMouth = new();
         private Bounds SpawnBounds => _spawnCollider.bounds;
+        private DialogueState _dialogueState;
+
+        private void Start()
+        {
+            _dialogueState = GameManager.GetState<DialogueState>();
+        }
 
         public void SpawnThought(ThoughtSO data)
         {

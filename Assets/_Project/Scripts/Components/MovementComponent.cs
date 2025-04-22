@@ -4,6 +4,8 @@ namespace Neuromorph.Components
 {
     public class MovementComponent : BaseComponent
     {
+        public bool CanMove { get; set; }
+
         private CharacterStatsSO Stats => _puppet.Stats;
         //Walk
         [SerializeField] private CharacterController _controller;
@@ -15,27 +17,20 @@ namespace Neuromorph.Components
         private bool IsGrounded => _controller.isGrounded; 
         private const float Gravity = -9.81f;
         private float _gravityVelocity;
-        private bool _inMovementState;
         
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
         }
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            _inMovementState = true;
-        }
-
         private void Start()
         {
-            _camera = Camera.main.transform;
+            _camera = CameraManager.MainCamera.transform;
         }
 
         private void Update()
         {
-            if (_inMovementState) Walk();
+            if (CanMove) Walk();
             ApplyGravity();
         }
         

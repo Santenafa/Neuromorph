@@ -2,6 +2,9 @@ namespace Neuromorph
 {
     public class StartingState : BaseGameState
     {
-        public StartingState(GameManager game) : base(game){}
+        public override void OnEnter()
+        {
+            GameManager.ChangeState<MoveState>();
+        }
     }
 }

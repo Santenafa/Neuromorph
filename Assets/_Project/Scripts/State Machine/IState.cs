@@ -3,8 +3,8 @@ namespace Neuromorph
     public interface IState
     {
         void OnEnter();
-        void Update();
-        void FixedUpdate();
+        void OnUpdate();
+        void OnFixedUpdate();
         void OnExit();
     }
 }

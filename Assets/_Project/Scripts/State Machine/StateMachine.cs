@@ -14,12 +14,12 @@ namespace Neuromorph
             ITransition transition = GetTransition();
             if (transition != null) ChangeState(transition.ToState);
             
-            _current.State?.Update();
+            _current.State?.OnUpdate();
         }
 
         public void FixedUpdate()
         {
-            _current.State?.FixedUpdate();
+            _current.State?.OnFixedUpdate();
         }
         
         //Only used to set the initial state of the StateMachine

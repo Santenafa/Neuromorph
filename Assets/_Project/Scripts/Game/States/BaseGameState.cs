@@ -1,12 +1,12 @@
+using UnityEngine;
+
 namespace Neuromorph
 {
-    public abstract class BaseGameState: BaseState
+    public abstract class BaseGameState: MonoBehaviour, IState
     {
-        protected GameManager Game;
-
-        public BaseGameState(GameManager game)
-        {
-            Game = game;
-        }
+        public virtual void OnEnter(){}
+        public virtual void OnUpdate(){}
+        public virtual void OnFixedUpdate(){}
+        public virtual void OnExit(){}
     }
 }

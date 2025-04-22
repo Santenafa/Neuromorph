@@ -6,40 +6,50 @@ namespace Neuromorph
 {
     public class GameManager : Singleton<GameManager>
     {
-        public IState State { get; private set; }
-        public Puppet Player;
-        public static event Action<IState> OnBeforeStateChanged;
-        public static event Action<IState> OnAfterStateChanged;
-        private StateMachine _stateMachine;
+        public BaseGameState CurrentState { get; private set; }
+        [SerializeField] private BaseGameState[] _gameStates;
+        public static event Action<BaseGameState> OnBeforeStateChanged;
+        public static event Action<BaseGameState> OnAfterStateChanged;
         protected override void Awake()
         {
             base.Awake();
-            _stateMachine = new StateMachine();
-            var freeMoveState = new FreeMoveState(this);
-            var inDialogueState = new InDialogueState(this);
-
-            AddTran(inDialogueState, freeMoveState, new FuncPredicate(() => true));
-            AddTran(freeMoveState, inDialogueState, new FuncPredicate(() => true));
-            
-            _stateMachine.SetInitialState(freeMoveState);
+            CurrentState = GetState<StartingState>();
+            CurrentState?.OnEnter();
         }
 
-        private void AddTran(IState from, IState to, IPredicate condition)
-            => _stateMachine.AddTransition(from, to, condition);
-        private void AddAnyTran(IState to, IPredicate condition)
-            => _stateMachine.AddAnyTransition(to, condition);
-
-        public void ChangeState(IState newState)
+        public void Update()
         {
-            OnBeforeStateChanged?.Invoke(newState);
+            CurrentState.OnUpdate();
+        }
 
-            State = newState;
-            //State.HandleState();
+        public void FixedUpdate()
+        {
+            CurrentState.OnFixedUpdate();
+        }
+
+        public static T ChangeState<T>()
+        {
+            var newState = GetState<T>() as BaseGameState;
+            if (!newState || newState == Instance.CurrentState) return default;
+            
+            OnBeforeStateChanged?.Invoke(newState);
+            
+            Instance.CurrentState?.OnExit();
+            newState.OnEnter();
+            Instance.CurrentState = newState;
 
             OnAfterStateChanged?.Invoke(newState);
-            
             Debug.Log($"New state: {newState}");
+            
+            return newState is T requiredState ? requiredState : default;
         }
-        
+
+        public static T GetState<T>()
+        {
+            foreach (BaseGameState state in Instance._gameStates) {
+                if (state is T requiredState) return requiredState;
+            }
+            return default;
+        }
     }
 }

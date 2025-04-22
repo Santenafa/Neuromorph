@@ -6,12 +6,17 @@ namespace Neuromorph.Components
 {
     public class DialogueComponent: BaseComponent
     {
+        public bool CanTalk { get; set; }
+
         [SerializeField] private Dialogue _dialogue;
         [SerializeField] private Image _dialogueIcon;
         
-        public void StartDialogue()
+        private void StartDialogue()
         {
-            DialogueManager.Instance.StartDialogue(_dialogue);
+            if (CanTalk) {
+                GameManager.ChangeState<DialogueState>().StartDialogue(_dialogue);
+                _dialogueIcon.enabled = false;
+            }
         }
         
         private void OnMouseDown()
@@ -21,7 +26,7 @@ namespace Neuromorph.Components
 
         private void OnMouseOver()
         {
-            _dialogueIcon.enabled = true;
+            if (CanTalk) _dialogueIcon.enabled = true;
         }
 
         private void OnMouseExit()
