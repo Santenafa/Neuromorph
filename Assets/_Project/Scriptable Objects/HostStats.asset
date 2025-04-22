@@ -16,4 +16,4 @@ MonoBehaviour:
   RotationSmoothTime: 0.1
   JumpPower: 8
   GravityMultiplier: 3
-  InteractRange: 10
+  InteractRange: 1

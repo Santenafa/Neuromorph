@@ -18,6 +18,7 @@ namespace Neuromorph
         public float GravityMultiplier = 3.0f;
         
         [Header("---------- Interact ----------")]
-        public float InteractRange = 10f;
+        public float InteractRange = 1f;
+        public float InteractRadius = 1f;
     }
 }

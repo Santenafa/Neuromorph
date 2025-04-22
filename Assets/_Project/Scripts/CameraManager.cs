@@ -13,9 +13,14 @@ namespace Neuromorph
         [SerializeField] private CinemachineVirtualCamera _vCameraBrain;
         [SerializeField] private EdgeCollider2D _edgeCollider;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            MainCamera = Camera.main;
+        }
+
         private void Start()
         {
-            MainCamera = Camera.main;
             ChangeEdgeCollider();
         }
 

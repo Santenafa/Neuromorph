@@ -37,33 +37,6 @@ namespace Neuromorph
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""ca05558c-ae7a-45c1-98d9-91235d9a234c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""4a6e2aef-78c0-442d-ab5a-6783eb45eadc"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Look"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""bd4a25f5-f31e-4f8d-a2f2-60d20f7b6def"",
-                    ""expectedControlType"": ""Delta"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -121,39 +94,6 @@ namespace Neuromorph
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""15eaecdc-a776-4d4a-99a3-565daae88764"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Player"",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a402c960-e16c-4970-b96e-b8706a242282"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Player"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cfc3e129-b913-4750-8028-83e739248ce4"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Player"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -208,9 +148,6 @@ namespace Neuromorph
             // Gameplay
             m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
             m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
-            m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
-            m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
-            m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -276,17 +213,11 @@ namespace Neuromorph
         private readonly InputActionMap m_Gameplay;
         private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
         private readonly InputAction m_Gameplay_Move;
-        private readonly InputAction m_Gameplay_Jump;
-        private readonly InputAction m_Gameplay_Interact;
-        private readonly InputAction m_Gameplay_Look;
         public struct GameplayActions
         {
             private @PlayerInput m_Wrapper;
             public GameplayActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Gameplay_Move;
-            public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
-            public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
-            public InputAction @Look => m_Wrapper.m_Gameplay_Look;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -299,15 +230,6 @@ namespace Neuromorph
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
-                @Look.started += instance.OnLook;
-                @Look.performed += instance.OnLook;
-                @Look.canceled += instance.OnLook;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -315,15 +237,6 @@ namespace Neuromorph
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
-                @Jump.started -= instance.OnJump;
-                @Jump.performed -= instance.OnJump;
-                @Jump.canceled -= instance.OnJump;
-                @Interact.started -= instance.OnInteract;
-                @Interact.performed -= instance.OnInteract;
-                @Interact.canceled -= instance.OnInteract;
-                @Look.started -= instance.OnLook;
-                @Look.performed -= instance.OnLook;
-                @Look.canceled -= instance.OnLook;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -399,9 +312,6 @@ namespace Neuromorph
         public interface IGameplayActions
         {
             void OnMove(InputAction.CallbackContext context);
-            void OnJump(InputAction.CallbackContext context);
-            void OnInteract(InputAction.CallbackContext context);
-            void OnLook(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

@@ -42,17 +42,6 @@ namespace Neuromorph
         public void OnMove(CallbackContext context) {
             _puppet.Movement.InputDir = context.ReadValue<Vector2>();
         }
-
-        public void OnJump(CallbackContext context) {
-            if (context.started) _puppet.Movement.Jump();
-        }
-
-        public void OnInteract(CallbackContext context) {
-            if (context.started) _puppet.Movement.Interact();
-        }
-        public void OnLook(CallbackContext context) {
-            if (context.started) _puppet.Movement.Interact();
-        }
         
         public void ChangePuppet(Puppet puppet)
         {

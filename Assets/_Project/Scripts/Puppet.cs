@@ -7,6 +7,8 @@ namespace Neuromorph
     {
         public MovementComponent Movement { get; private set; }
         public PossessionComponent Possession { get; private set; }
+        public CharacterStatsSO Stats => _stats;
+        [SerializeField] private CharacterStatsSO _stats;
 
         private void OnEnable()
         {

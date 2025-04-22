@@ -6,6 +6,6 @@ namespace Neuromorph.Components
     public abstract class BaseComponent: MonoBehaviour
     {
         protected Puppet _puppet;
-        protected void OnEnable() => _puppet = GetComponent<Puppet>();
+        protected virtual void OnEnable() => _puppet = GetComponent<Puppet>();
     }
 }
