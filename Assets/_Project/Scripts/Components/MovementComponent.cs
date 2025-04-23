@@ -2,11 +2,10 @@ using UnityEngine;
 
 namespace Neuromorph.Components
 {
-    public class MovementComponent : BaseComponent
+    public class MovementComponent : MonoBehaviour
     {
         public bool CanMove { get; set; }
-
-        private CharacterStatsSO Stats => _puppet.Stats;
+        [SerializeField] private CharacterStatsSO _stats;
         //Walk
         [SerializeField] private CharacterController _controller;
         public Vector2 InputDir { get; set; }
@@ -39,7 +38,7 @@ namespace Neuromorph.Components
             if (IsGrounded && _gravityVelocity < 0f) {
                 _gravityVelocity = -1f;
             } else {
-                _gravityVelocity += Gravity * Stats.GravityMultiplier * Time.deltaTime;
+                _gravityVelocity += Gravity * _stats.GravityMultiplier * Time.deltaTime;
             }
             _controller.Move(_gravityVelocity * Time.deltaTime * Vector3.up);
         }
@@ -51,13 +50,13 @@ namespace Neuromorph.Components
             float targetAngle
                 = Mathf.Atan2(InputDir.x, InputDir.y) * Mathf.Rad2Deg + _camera.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(
-                transform.eulerAngles.y, targetAngle, ref _currentVelocity, Stats.RotationSmoothTime
+                transform.eulerAngles.y, targetAngle, ref _currentVelocity, _stats.RotationSmoothTime
             );
             
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             
             Vector3 moveAngle = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            _controller.Move(Stats.WalkSpeed * Time.deltaTime * moveAngle);
+            _controller.Move(_stats.WalkSpeed * Time.deltaTime * moveAngle);
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Neuromorph.Components
 {
-    public class DialogueComponent: BaseComponent
+    public class DialogueComponent: MonoBehaviour
     {
         public bool CanTalk { get; set; }
 

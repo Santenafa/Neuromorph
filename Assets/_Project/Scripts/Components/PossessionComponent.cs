@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Neuromorph.Components
 {
-    public class PossessionComponent: BaseComponent
+    public class PossessionComponent: MonoBehaviour
     {
         [SerializeField] private float _possessDistance = 3f;
         private CharacterController _col;
@@ -24,9 +24,10 @@ namespace Neuromorph.Components
             return false;
         }
 
-        public void UnPossess(Puppet puppetToUnPossess)
+        public static void UnPossess(Puppet puppetToUnPossess)
         {
-            puppetToUnPossess.Movement.InputDir = Vector2.zero;
+            if (puppetToUnPossess.TryGetComponent(out MovementComponent movement))
+                movement.InputDir = Vector2.zero;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Neuromorph
 
         private static void SetMoveAndTalk(bool value)
         {
-            GameManager.Player.GetComponent<MovementComponent>().CanMove = value;
+            GameManager.Player.SetCanMove(value);
             
             foreach (DialogueComponent dialogue in FindObjectsOfType<DialogueComponent>()) {
                 dialogue.CanTalk = value;

@@ -34,19 +34,20 @@ namespace Neuromorph
                 && _puppet.TryGetComponent(out PossessionComponent possession)
                 && possession.TryPossess(out Puppet puppet))
             {
-                possession.UnPossess(_puppet); //Memory Wipe
-                ChangePuppet(puppet);
+                PossessionComponent.UnPossess(_puppet); //Memory Wipe
+                _puppet = puppet;
+                print("new puppet: " + puppet.name);
             }
         }
 
-        public void OnMove(CallbackContext context) {
-            _puppet.Movement.InputDir = context.ReadValue<Vector2>();
-        }
-        
-        public void ChangePuppet(Puppet puppet)
+        public void OnMove(CallbackContext context)
         {
-            _puppet = puppet;
-            print("new puppet: " + puppet.name);
+            //_puppet.Movement.InputDir = context.ReadValue<Vector2>();
+        }
+
+        public void OnClickMove(CallbackContext context)
+        {
+            if (context.started) GameManager.Player.ClickToMove();
         }
     }
 }

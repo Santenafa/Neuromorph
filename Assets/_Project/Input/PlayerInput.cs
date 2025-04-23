@@ -37,6 +37,15 @@ namespace Neuromorph
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Click Move"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c52d9dc-fa7c-41d8-886f-1a8a99fb7348"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -94,6 +103,17 @@ namespace Neuromorph
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9f3e3e2-5e3f-4008-8dcd-4671820faa26"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player"",
+                    ""action"": ""Click Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -148,6 +168,7 @@ namespace Neuromorph
             // Gameplay
             m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
             m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
+            m_Gameplay_ClickMove = m_Gameplay.FindAction("Click Move", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -213,11 +234,13 @@ namespace Neuromorph
         private readonly InputActionMap m_Gameplay;
         private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
         private readonly InputAction m_Gameplay_Move;
+        private readonly InputAction m_Gameplay_ClickMove;
         public struct GameplayActions
         {
             private @PlayerInput m_Wrapper;
             public GameplayActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Gameplay_Move;
+            public InputAction @ClickMove => m_Wrapper.m_Gameplay_ClickMove;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -230,6 +253,9 @@ namespace Neuromorph
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @ClickMove.started += instance.OnClickMove;
+                @ClickMove.performed += instance.OnClickMove;
+                @ClickMove.canceled += instance.OnClickMove;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -237,6 +263,9 @@ namespace Neuromorph
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
+                @ClickMove.started -= instance.OnClickMove;
+                @ClickMove.performed -= instance.OnClickMove;
+                @ClickMove.canceled -= instance.OnClickMove;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -312,6 +341,7 @@ namespace Neuromorph
         public interface IGameplayActions
         {
             void OnMove(InputAction.CallbackContext context);
+            void OnClickMove(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
