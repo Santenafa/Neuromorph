@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Neuromorph
+namespace Neuromorph.Cameras
 {
     public class LookAtCamera : MonoBehaviour
     {

@@ -28,11 +28,5 @@ namespace Neuromorph.Components
         {
             puppetToUnPossess.Movement.InputDir = Vector2.zero;
         }
-
-        private void OnDrawGizmos()
-        {
-            if (Input.GetKey(KeyCode.Q))
-                Gizmos.DrawLine(_col.bounds.center, _col.bounds.center + transform.forward * _possessDistance);
-        }
     }
 }

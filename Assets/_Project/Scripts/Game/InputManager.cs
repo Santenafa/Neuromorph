@@ -45,7 +45,6 @@ namespace Neuromorph
         
         public void ChangePuppet(Puppet puppet)
         {
-            CameraManager.Instance.FollowPuppet(puppet);
             _puppet = puppet;
             print("new puppet: " + puppet.name);
         }

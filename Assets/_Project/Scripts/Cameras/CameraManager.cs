@@ -23,21 +23,6 @@ namespace Neuromorph
         {
             ChangeEdgeCollider();
         }
-
-        public void FollowPuppet(Puppet puppet)
-        {
-            _vCameraWorld.Follow = puppet.transform;
-            _vCameraWorld.LookAt = puppet.transform;
-        }
-        /*private void OnEnable() => 
-            EventBus.OnPlayerCreated += SetupCamera;
-        private void OnDisable() =>
-            EventBus.OnPlayerCreated -= SetupCamera;
-
-        private void SetupCamera(Entity targetEntity){
-            _vcam.Follow = targetEntity.transform;
-            EventBus.OnPlayerCreated -= SetupCamera;
-        }*/
         
         public Vector3 GetMousePositionInBrainSpace()
         {
@@ -64,8 +49,8 @@ namespace Neuromorph
             _edgeCollider.SetPoints(screenEdges);
         }
         
-        public bool IsInsideBrainUI(){
-            Vector3 mousePos = _cameraBrain.ScreenToViewportPoint(Input.mousePosition);
+        public static bool IsInsideBrainUI(){
+            Vector3 mousePos = Instance._cameraBrain.ScreenToViewportPoint(Input.mousePosition);
             return mousePos.x <= 1f;
         }
     }

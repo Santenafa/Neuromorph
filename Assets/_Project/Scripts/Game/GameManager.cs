@@ -7,6 +7,8 @@ namespace Neuromorph
     public class GameManager : Singleton<GameManager>
     {
         public BaseGameState CurrentState { get; private set; }
+        public static Puppet Player => Instance._player;
+        [SerializeField] private Puppet _player;
         [SerializeField] private BaseGameState[] _gameStates;
         public static event Action<BaseGameState> OnBeforeStateChanged;
         public static event Action<BaseGameState> OnAfterStateChanged;
@@ -50,6 +52,11 @@ namespace Neuromorph
                 if (state is T requiredState) return requiredState;
             }
             return default;
+        }
+        
+        public static bool IsPlayer(Collider other)
+        {
+            return other.TryGetComponent(out Puppet puppet)  && puppet == Player;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Neuromorph.UI
         private void Update()
         {
             transform.position = Input.mousePosition;// + _cursorHotspot;
-            bool isInsideBrain = CameraManager.Instance.IsInsideBrainUI();
+            bool isInsideBrain = CameraManager.IsInsideBrainUI();
 
             if (_isInsideBrain == isInsideBrain) return;
             
