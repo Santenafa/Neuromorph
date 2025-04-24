@@ -1,5 +1,4 @@
 using Neuromorph.Utilities;
-using Neuromorph.Components;
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
@@ -47,7 +46,7 @@ namespace Neuromorph
 
         public void OnClickMove(CallbackContext context)
         {
-            if (context.started) GameManager.Player.ClickToMove();
+            //if (context.started) GameManager.Player.ClickToMove();
         }
     }
 }

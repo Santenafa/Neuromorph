@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Neuromorph
 {
-    public class DialogueState : BaseGameState
+    public class TalkState : BaseGameState
     {
         public ConState State { get; private set; } = ConState.NotActive;
         
@@ -22,7 +22,7 @@ namespace Neuromorph
         
         private const string ChooseText = "[Choose your Thought]";
         private Sentence _currentSentence;
-        public Dialogue CurrentDialogue { get; set; }
+        private DialogueSO _currentDialogueSo;
         private readonly Queue<Sentence> _sentences = new();
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
 
@@ -54,6 +54,7 @@ namespace Neuromorph
                 case ConState.TransitionToAwaitThought:
                     _nameBox.SetActive(false);
                     _dialogueText.text = $"<color={GameColor.PARASITE}>{ChooseText}</color>";
+                    ThoughtChooseArea.SetMouth(true);
                     SetState(ConState.AwaitThought);
                     break;
                 case ConState.AwaitThought: AcceptThought(); break;
@@ -62,15 +63,15 @@ namespace Neuromorph
             }
         }
 
-        public void StartDialogue(Dialogue dialogue)
+        public void StartDialogue(DialogueSO dialogueSo)
         {
-            CurrentDialogue = dialogue;
+            _currentDialogueSo = dialogueSo;
             
             _nameBox.SetActive(true);
-            _nameText.text = CurrentDialogue.Name;
+            _nameText.text = _currentDialogueSo.Name;
             _sentences.Clear();
 
-            foreach (Sentence sentence in CurrentDialogue.Sentences)
+            foreach (Sentence sentence in _currentDialogueSo.Sentences)
                 _sentences.Enqueue(sentence);
             
             if (_sentences.Count > 0) DisplayNextSentence();
@@ -111,10 +112,15 @@ namespace Neuromorph
         private void AcceptThought()
         {
             Thought thought = BrainManager.Instance.ChosenThought;
-            if (thought) {
-                StartDialogue(thought.ThoughtData.TriggeredDialogue);
-                BrainManager.Instance.DestroyThought(thought);
-            }
+            if (!thought) return;
+            
+            DialogueSO dialogue = thought.ThoughtData.TriggeredDialogue;
+            if (dialogue) StartDialogue(dialogue);
+            else GameManager.ChangeState<MoveState>();
+            
+            BrainManager.Instance.DestroyThought(thought);
+            
+            ThoughtChooseArea.SetMouth(false);
         }
 
         private void EndOfSentence()
@@ -123,7 +129,7 @@ namespace Neuromorph
 
             if (_sentences.Count == 0)
             {
-                SetState(CurrentDialogue.IsAwaitingThought
+                SetState(_currentDialogueSo.IsAwaitingThought
                     ? ConState.TransitionToAwaitThought
                     : ConState.Ended);
             }

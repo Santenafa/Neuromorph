@@ -145,7 +145,7 @@ ScriptedImporter:
   spriteSheetImportData:
   - name: Brain_0
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -153,7 +153,7 @@ ScriptedImporter:
       x: 0
       y: 0
       width: 177
-      height: 138
+      height: 157
     spriteID: b12114b46ca6a65469c768b80c3ad5cd
     spriteBone: []
     spriteOutline: []
@@ -183,7 +183,7 @@ ScriptedImporter:
         x: 15
         y: 8
         width: 177
-        height: 138
+        height: 157
       spriteId: 069b24647b888e443bed33cc2e70ef5e
     linkedCells: []
     parentIndex: -1
@@ -251,5 +251,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 208, y: 160}
+  canvasSize: {x: 208, y: 192}
   previousTextureSize: {x: 256, y: 256}

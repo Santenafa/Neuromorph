@@ -9,15 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 265450bd742b4e98b12d4d169b121820, type: 3}
-  m_Name: Fear
+  m_Script: {fileID: 11500000, guid: a7d5fb9af70141cf865e097855b3ceac, type: 3}
+  m_Name: FearResponse
   m_EditorClassIdentifier: 
-  NameValue: Fear
-  PromoText: I fear of...
-  TriggeredDialogue:
-    Name: Me
-    Sentences:
-    - Text: Darkness...
-      DialogueEvent:
-        ThoughtToSpawn: {fileID: 0}
-    IsAwaitingThought: 0
+  Name: Me
+  Sentences:
+  - Text: ...darkness
+    DialogueEvent:
+      ThoughtToSpawn: {fileID: 11400000, guid: 9c1b98ec9919ba445a0607db6419138b, type: 2}
+  IsAwaitingThought: 0

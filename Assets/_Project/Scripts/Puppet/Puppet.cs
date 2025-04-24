@@ -35,7 +35,7 @@ namespace Neuromorph
 
         public void ClickToMove()
         {
-            if (!_canMove) return;
+            if (!_canMove || CameraManager.IsInsideBrainUI()) return;
             
             bool isHit = Physics.Raycast(CameraManager.MainCamera.ScreenPointToRay(Input.mousePosition),
                 out RaycastHit hit, 100f, _clickableLayer);

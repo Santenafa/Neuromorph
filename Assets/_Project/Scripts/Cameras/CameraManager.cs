@@ -51,7 +51,7 @@ namespace Neuromorph
         
         public static bool IsInsideBrainUI(){
             Vector3 mousePos = Instance._cameraBrain.ScreenToViewportPoint(Input.mousePosition);
-            return mousePos.x <= 1f;
+            return mousePos.x is >= 0f and <= 1f;
         }
     }
 }

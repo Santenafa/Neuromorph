@@ -1,4 +1,4 @@
-using Neuromorph.Components;
+using UnityEngine;
 
 namespace Neuromorph
 {
@@ -11,6 +11,11 @@ namespace Neuromorph
         public override void OnExit()
         {
             SetMoveAndTalk(false);
+        }
+
+        public override void OnUpdate()
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0)) GameManager.Player.ClickToMove();
         }
 
         private static void SetMoveAndTalk(bool value)

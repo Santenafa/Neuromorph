@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Neuromorph.Components
+namespace Neuromorph
 {
     public class PossessionComponent: MonoBehaviour
     {
@@ -26,8 +26,7 @@ namespace Neuromorph.Components
 
         public static void UnPossess(Puppet puppetToUnPossess)
         {
-            if (puppetToUnPossess.TryGetComponent(out MovementComponent movement))
-                movement.InputDir = Vector2.zero;
+            //puppetToUnPossess.SetCanMove(false);
         }
     }
 }

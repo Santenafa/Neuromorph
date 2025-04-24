@@ -2,19 +2,19 @@ using Neuromorph.Dialogues;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Neuromorph.Components
+namespace Neuromorph
 {
     public class DialogueComponent: MonoBehaviour
     {
         public bool CanTalk { get; set; }
 
-        [SerializeField] private Dialogue _dialogue;
+        [SerializeField] private DialogueSO _dialogue;
         [SerializeField] private Image _dialogueIcon;
         
         private void StartDialogue()
         {
             if (CanTalk) {
-                GameManager.ChangeState<DialogueState>().StartDialogue(_dialogue);
+                GameManager.ChangeState<TalkState>().StartDialogue(_dialogue);
                 _dialogueIcon.enabled = false;
             }
         }
