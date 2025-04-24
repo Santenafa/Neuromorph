@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +10,10 @@ namespace Neuromorph
         [SerializeField] private LayerMask _clickableLayer;
         [SerializeField] private bool _isInstantRotation;
         [SerializeField] private float _lookRotationSpeed = 50f;
-        private bool _canMove;
+        
+        private Interactable _followTarget;
+        private PuppetState _state = PuppetState.Idle;
+        private enum PuppetState { Talking, Idle, Moving}
 
         private void Awake()
         {
@@ -19,7 +23,31 @@ namespace Neuromorph
 
         private void Update()
         {
-            if (_canMove) FaceTarget();
+            switch (_state)
+            {
+                case PuppetState.Moving:
+                    Moving();
+                    break;
+                case PuppetState.Talking:
+                case PuppetState.Idle:
+                default: break;
+            }
+        }
+
+        
+        private void Moving()
+        {
+            FaceTarget();
+            
+            if (_agent.remainingDistance > _agent.stoppingDistance) return;
+            
+            _state = PuppetState.Idle;
+            
+            if (!_followTarget) return;
+            
+            transform.DOLookAt(_followTarget.transform.position, 0.1f, AxisConstraint.Y);
+            _followTarget.Interact();
+            _followTarget = null;
         }
 
         private void FaceTarget()
@@ -35,18 +63,45 @@ namespace Neuromorph
 
         public void ClickToMove()
         {
-            if (!_canMove || CameraManager.IsInsideBrainUI()) return;
+            if (_state == PuppetState.Talking || CameraManager.IsInsideBrainUI()) return;
             
             bool isHit = Physics.Raycast(CameraManager.MainCamera.ScreenPointToRay(Input.mousePosition),
                 out RaycastHit hit, 100f, _clickableLayer);
-            
-            if (isHit) _agent.SetDestination(hit.point);
+
+            switch (isHit)
+            {
+                case true when hit.transform.TryGetComponent(out Interactable target):
+                    WalkToTarget(target); break;
+                case true:
+                    WalkToPoint(hit.point); break;
+                default:
+                    _state = PuppetState.Idle; break;
+            }
         }
 
         public void SetCanMove(bool value)
         {
-            if (!value) _agent.ResetPath();
-            _canMove = value;
+            if (value)
+                _state = PuppetState.Idle;
+            else {
+                _agent.ResetPath();
+                _followTarget = null;
+                _state = PuppetState.Talking;
+            }
+        }
+
+        private void WalkToTarget(Interactable target)
+        {
+            _state = PuppetState.Moving;
+            _followTarget = target;
+            _agent.SetDestination(target.InteractPoint);
+        }
+
+        private void WalkToPoint(Vector3 point)
+        {
+            _state = PuppetState.Moving;
+            _followTarget = null;
+            _agent.SetDestination(point);
         }
     }
 }

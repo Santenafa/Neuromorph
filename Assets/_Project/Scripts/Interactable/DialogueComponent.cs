@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Neuromorph
 {
-    public class DialogueComponent: MonoBehaviour
+    public class DialogueComponent: Interactable
     {
         public bool CanTalk { get; set; }
 
@@ -13,15 +13,20 @@ namespace Neuromorph
         
         private void StartDialogue()
         {
-            if (CanTalk) {
-                GameManager.ChangeState<TalkState>().StartDialogue(_dialogue);
-                _dialogueIcon.enabled = false;
-            }
+            if (!CanTalk) return;
+            
+            GameManager.ChangeState<TalkState>().StartDialogue(_dialogue);
+            _dialogueIcon.enabled = false;
+        }
+        
+        public override void Interact()
+        {
+            StartDialogue();
         }
         
         private void OnMouseDown()
         {
-            StartDialogue();
+            //StartDialogue();
         }
 
         private void OnMouseOver()

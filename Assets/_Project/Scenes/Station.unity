@@ -471,7 +471,7 @@ Transform:
   m_GameObject: {fileID: 77389737}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.38, z: 1}
+  m_LocalPosition: {x: 0, y: 2.3, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -11407,7 +11407,7 @@ Transform:
   m_GameObject: {fileID: 1155384401}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.87, z: 2}
+  m_LocalPosition: {x: 0, y: -0.87, z: 2}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -14940,8 +14940,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 679478374}
-  - {fileID: 2077902332}
   - {fileID: 1885909584}
+  - {fileID: 2077902332}
   - {fileID: 77389738}
   - {fileID: 1155384402}
   - {fileID: 2007610246}
@@ -16537,7 +16537,7 @@ Transform:
   m_GameObject: {fileID: 2007610245}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16810,7 +16810,7 @@ Transform:
   m_GameObject: {fileID: 2077902331}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.75, z: 0}
+  m_LocalPosition: {x: 0, y: -2.75, z: 0}
   m_LocalScale: {x: 2, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17202,27 +17202,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1368158286}
     m_Modifications:
-    - target: {fileID: 5541111600736034987, guid: 30da78ca82fede34d879bb7235b931a4,
-        type: 3}
-      propertyPath: _dialogue
-      value: 
-      objectReference: {fileID: 11400000, guid: 04a80cc913a0a87489e80e1ea5ed626e,
-        type: 2}
-    - target: {fileID: 5541111600736034987, guid: 30da78ca82fede34d879bb7235b931a4,
-        type: 3}
-      propertyPath: _dialogueSo
-      value: 
-      objectReference: {fileID: 11400000, guid: 04a80cc913a0a87489e80e1ea5ed626e,
-        type: 2}
     - target: {fileID: 5630060487693203726, guid: 30da78ca82fede34d879bb7235b931a4,
         type: 3}
       propertyPath: m_Name
       value: NPC
-      objectReference: {fileID: 0}
-    - target: {fileID: 5630060487693203726, guid: 30da78ca82fede34d879bb7235b931a4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7224517065321082789, guid: 30da78ca82fede34d879bb7235b931a4,
         type: 3}

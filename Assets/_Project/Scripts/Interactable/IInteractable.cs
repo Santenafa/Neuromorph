@@ -1,4 +1,4 @@
-namespace Neuromorph.Interfaces
+namespace Neuromorph
 {
     public interface IInteractable
     {

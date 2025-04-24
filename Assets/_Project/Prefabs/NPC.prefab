@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5903600831503756151}
   - component: {fileID: 3939013649512389427}
   - component: {fileID: 5362817602750069759}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pyramid-head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7817409953850827435}
   - component: {fileID: 8700589078634051377}
   - component: {fileID: 9137013467051712129}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: sword_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 265763715259705506}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 671780452888808062}
   - component: {fileID: 3843297104911801075}
   - component: {fileID: 6168795630870217869}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ring_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 7837004394979051790}
   - component: {fileID: 4089903678546064626}
   - component: {fileID: 502469981372806668}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cup-R_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 1473619868035021392}
   - component: {fileID: 7721596422441470231}
   - component: {fileID: 7984925838230988358}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Image - Dialogue Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +449,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1729714454692704505}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,6 +472,37 @@ Transform:
   - {fileID: 7817409953850827435}
   m_Father: {fileID: 5604735614490386564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4244054868160370724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2883996612964319593}
+  m_Layer: 7
+  m_Name: Talk Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2883996612964319593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4244054868160370724}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.21, y: 0, z: 1.41}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7224517065321082789}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4919926567510992320
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,7 +516,7 @@ GameObject:
   - component: {fileID: 2748607402126135187}
   - component: {fileID: 1374671647025555464}
   - component: {fileID: 5767356143508633899}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas - Icons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5604735614490386564}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pyramid_Angel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -635,7 +666,7 @@ GameObject:
   - component: {fileID: 7224517065321082789}
   - component: {fileID: -134789212977583407}
   - component: {fileID: 5541111600736034987}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: NPC
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -659,6 +690,7 @@ Transform:
   - {fileID: 8255194486226559285}
   - {fileID: 1733409081793828945}
   - {fileID: 5604735614490386564}
+  - {fileID: 2883996612964319593}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &-134789212977583407
@@ -696,17 +728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e022189e074b67b3a1f6acf11b98bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue:
-    Name: Shef
-    Sentences:
-    - Text: Hello, Bud!
-      DialogueEvent:
-        ThoughtToSpawn: {fileID: 0}
-    - Text: The food will be ready soon.
-      DialogueEvent:
-        ThoughtToSpawn: {fileID: 11400000, guid: 9c1b98ec9919ba445a0607db6419138b,
-          type: 2}
-    IsAwaitingThought: 1
+  _interactPoint: {fileID: 2883996612964319593}
+  _dialogue: {fileID: 11400000, guid: 04a80cc913a0a87489e80e1ea5ed626e, type: 2}
   _dialogueIcon: {fileID: 7984925838230988358}
 --- !u!1 &6171878442939057294
 GameObject:
@@ -719,7 +742,7 @@ GameObject:
   - component: {fileID: 8261377218678865278}
   - component: {fileID: 2939446218336274561}
   - component: {fileID: 62968220079181303}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: body_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -800,7 +823,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8300072579407245708}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cup-R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -832,7 +855,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1141255772717254332}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cup-L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -866,7 +889,7 @@ GameObject:
   - component: {fileID: 8255194486226559285}
   - component: {fileID: 7503186650704547396}
   - component: {fileID: 6090180814576416395}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -947,7 +970,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5810902540127467471}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -979,7 +1002,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3880524991911594764}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: scales
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1015,7 +1038,7 @@ GameObject:
   - component: {fileID: 862306865472480608}
   - component: {fileID: 7138572378596592385}
   - component: {fileID: 4089158129592054089}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: scales_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1096,7 +1119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7271812899361645136}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1130,7 +1153,7 @@ GameObject:
   - component: {fileID: 2742971051891322887}
   - component: {fileID: 7003323683902367117}
   - component: {fileID: 3184815555044365013}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cup-L_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1214,7 +1237,7 @@ GameObject:
   - component: {fileID: 8434443171385548918}
   - component: {fileID: 4119134289214644364}
   - component: {fileID: 3779692145170383002}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
