@@ -63,7 +63,7 @@ namespace Neuromorph
 
         public void ClickToMove()
         {
-            if (_state == PuppetState.Talking || CameraManager.IsInsideBrainUI()) return;
+            if (_state == PuppetState.Talking || !CameraManager.IsInsideWorldUI()) return;
             
             bool isHit = Physics.Raycast(CameraManager.MainCamera.ScreenPointToRay(Input.mousePosition),
                 out RaycastHit hit, 100f, _clickableLayer);

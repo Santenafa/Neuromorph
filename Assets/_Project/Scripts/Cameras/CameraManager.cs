@@ -49,8 +49,8 @@ namespace Neuromorph
             _edgeCollider.SetPoints(screenEdges);
         }
         
-        public static bool IsInsideBrainUI(){
-            Vector3 mousePos = Instance._cameraBrain.ScreenToViewportPoint(Input.mousePosition);
+        public static bool IsInsideWorldUI(){
+            Vector3 mousePos = MainCamera.ScreenToViewportPoint(Input.mousePosition);
             return mousePos.x is >= 0f and <= 1f;
         }
     }

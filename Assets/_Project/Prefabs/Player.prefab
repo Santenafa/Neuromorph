@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 786033963557244302}
   - component: {fileID: 5102505904622423412}
   - component: {fileID: 5445288606579584354}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 969949010428382413}
   - component: {fileID: 1712784409635972028}
   - component: {fileID: 3125797169251392371}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 7505582822641902588}
   - component: {fileID: 738921849519527211}
   - component: {fileID: 751455213290876657}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ MonoBehaviour:
   _agent: {fileID: 751455213290876657}
   _clickableLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 64
   _isInstantRotation: 0
   _lookRotationSpeed: 50
 --- !u!54 &7505582822641902588
@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 6467352714637714027}
   - component: {fileID: 7851590877588555248}
   - component: {fileID: 3453248276019598547}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas - Icons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 7752662739841980328}
   - component: {fileID: 1498920018964014319}
   - component: {fileID: 1240041753735056318}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image - Dialogue Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
