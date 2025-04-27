@@ -8,10 +8,6 @@ namespace Neuromorph
     public class CameraManager : Singleton<CameraManager>
     {
         public static Camera MainCamera { get; private set; }
-        [SerializeField] private Camera _cameraBrain;
-        [SerializeField] private CinemachineFreeLook _vCameraWorld;
-        [SerializeField] private CinemachineVirtualCamera _vCameraBrain;
-        [SerializeField] private EdgeCollider2D _edgeCollider;
 
         protected override void Awake()
         {
@@ -21,24 +17,17 @@ namespace Neuromorph
 
         private void Start()
         {
-            ChangeEdgeCollider();
+            //ChangeEdgeCollider();
         }
         
-        public Vector3 GetMousePositionInBrainSpace()
+        public static Vector3 GetMousePositionInWorld()
         {
-            Vector3 mousePosition = _cameraBrain.ScreenToWorldPoint(Input.mousePosition);
-            return new Vector3(mousePosition.x, mousePosition.y, 0f);
-        }
-        
-        public static Vector3 GetMousePositionInWorldSpace()
-        {
-            Vector3 mousePosition = MainCamera.ScreenToWorldPoint(Input.mousePosition);
-            return new Vector3(mousePosition.x, mousePosition.y, 0f);
+            return MainCamera.ScreenToWorldPoint(Input.mousePosition);
         }
         
         private void ChangeEdgeCollider()
         {
-            float height = _cameraBrain.orthographicSize;
+            /*float height = _cameraBrain.orthographicSize;
             float width = _cameraBrain.orthographicSize * _cameraBrain.aspect;
             
             List<Vector2> screenEdges = new() {
@@ -46,7 +35,7 @@ namespace Neuromorph
                 new Vector2(width, height), new Vector2(width, -height),
                 new Vector2(-width, -height)
             };
-            _edgeCollider.SetPoints(screenEdges);
+            _edgeCollider.SetPoints(screenEdges);*/
         }
         
         public static bool IsInsideWorldUI(){

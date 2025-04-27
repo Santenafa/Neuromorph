@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265450bd742b4e98b12d4d169b121820, type: 3}
   m_Name: Hungry
   m_EditorClassIdentifier: 
-  NameValue: Retirement Home
+  NameValue: Anomalocaris
   PromoText: Stomach growls...
   TriggeredDialogue: {fileID: 11400000, guid: 63a1e8a8593942442a08a9fa9cd3bd5d, type: 2}

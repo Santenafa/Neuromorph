@@ -7,8 +7,9 @@ using Random = UnityEngine.Random;
 
 namespace Neuromorph.Dialogues
 {
-    public class Thought : MonoBehaviour, IPointerDownHandler
+    public class Thought : MonoBehaviour, IPointerDownHandler, IDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
+        public bool isRB;
         public ThoughtSO ThoughtData { get; private set; }
         [Header("----- Colors -----")]
         [SerializeField] private Color _draggingColor;
@@ -27,12 +28,21 @@ namespace Neuromorph.Dialogues
         
         private ThoughtState _state = ThoughtState.Idle;
         private Rigidbody2D _rBody;
-        private Vector3 _mouseOffset;
+        private Vector2 _mouseOffset;
+        private RectTransform _rectTransform;
+        private Canvas _canvas;
+        private Vector2 _targetPos = Vector2.zero;
         
         private void Awake()
         {
             _rBody = GetComponent<Rigidbody2D>();
             _audioSource = GetComponent<AudioSource>();
+            _rectTransform = GetComponent<RectTransform>();
+        }
+        private void FixedUpdate()
+        {
+            if (_targetPos != Vector2.zero)
+                _rBody.MovePosition(_targetPos);
         }
         
         public void Init(ThoughtSO data, Bounds spawnBounds)
@@ -50,9 +60,9 @@ namespace Neuromorph.Dialogues
             SetState(ThoughtState.Idle);
             
             Bounds thoughtBounds = colliders[0].bounds;
-            
-            float x = Random.Range(spawnBounds.min.x, spawnBounds.max.x - thoughtBounds.size.x); 
-            float y = Random.Range(spawnBounds.min.y + thoughtBounds.size.y, spawnBounds.max.y);
+
+            float x = Random.Range(spawnBounds.min.x + thoughtBounds.extents.x, spawnBounds.max.x - thoughtBounds.extents.x);
+            float y = Random.Range(spawnBounds.min.y + thoughtBounds.extents.y, spawnBounds.max.y - thoughtBounds.extents.y);
             
             transform.position = new Vector3(x, y, 0f);
             WordsManager.Instance.TryAddMenuThought(data);
@@ -61,34 +71,37 @@ namespace Neuromorph.Dialogues
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Right)
-            {
+            if (eventData.button == PointerEventData.InputButton.Right) {
                 Remove();
-            }
-            else if (eventData.button == PointerEventData.InputButton.Left)
-            {
-                _mouseOffset = transform.position - GetMousePos();
+            } else {
+                _mouseOffset = (Vector2)transform.position - GetMousePos();
+                _targetPos = GetMousePos() + _mouseOffset;
+                gameObject.transform.SetAsLastSibling();
             }
         }
-        private void OnMouseDown()
+        public void OnDrag(PointerEventData eventData)
         {
-            
+            _targetPos = GetMousePos() + _mouseOffset;
+        }
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            //concept.fuse = 3f;
+            _targetPos = Vector2.zero;
         }
 
-        private void OnMouseDrag()
+        public void OnDrop(PointerEventData eventData)
         {
-            _rBody.MovePosition(GetMousePos() + _mouseOffset);
+            //play place sound
         }
-
-        private void OnMouseOver()
+        public void OnPointerEnter(PointerEventData eventData)
         {
             if (_state == ThoughtState.Idle) SetOutline(true, _draggingColor);
         }
-
-        private void OnMouseExit()
+        public void OnPointerExit(PointerEventData eventData)
         {
             if (_state == ThoughtState.Idle) SetOutline(false, _draggingColor);
         }
+        
         private void SetOutline(bool isEnabled, Color color)
         {
             _outline.enabled = isEnabled;
@@ -116,7 +129,7 @@ namespace Neuromorph.Dialogues
             Destroy(gameObject);
         }
         
-        private static Vector3 GetMousePos() => CameraManager.Instance.GetMousePositionInBrainSpace();
+        private static Vector2 GetMousePos() => Input.mousePosition;
     }
     public enum ThoughtState { Idle, Chosen }
 }
