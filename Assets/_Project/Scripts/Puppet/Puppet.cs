@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 namespace Neuromorph
 {
@@ -63,7 +64,7 @@ namespace Neuromorph
 
         public void ClickToMove()
         {
-            if (_state == PuppetState.Talking || !CameraManager.IsInsideWorldUI()) return;
+            if (_state == PuppetState.Talking || EventSystem.current.IsPointerOverGameObject()) return;
             
             bool isHit = Physics.Raycast(CameraManager.MainCamera.ScreenPointToRay(Input.mousePosition),
                 out RaycastHit hit, 100f, _clickableLayer);
