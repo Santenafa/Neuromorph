@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Neuromorph.Utilities;
 using Neuromorph.Dialogues;
 using UnityEngine;
 using TMPro;
@@ -21,9 +20,9 @@ namespace Neuromorph
         [SerializeField] private TMP_Text _dialogueText;
         
         private const string ChooseText = "[Choose your Thought]";
-        private Sentence _currentSentence;
-        private DialogueSO _currentDialogueSo;
-        private readonly Queue<Sentence> _sentences = new();
+        private string _currentSentence;
+        //private DialogueSO _currentDialogueSo;
+        //private readonly Queue<Sentence> _sentences = new();
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
 
         private void Start()
@@ -63,18 +62,18 @@ namespace Neuromorph
             }
         }
 
-        public void StartDialogue(DialogueSO dialogueSo)
+        public void StartDialogue(string dialogueSo)
         {
-            _currentDialogueSo = dialogueSo;
+            //_currentDialogueSo = dialogueSo;
             
             _nameBox.SetActive(true);
-            _nameText.text = _currentDialogueSo.Name;
-            _sentences.Clear();
+            //_nameText.text = _currentDialogueSo.Name;
+            //_sentences.Clear();
 
-            foreach (Sentence sentence in _currentDialogueSo.Sentences)
-                _sentences.Enqueue(sentence);
+            //foreach (Sentence sentence in _currentDialogueSo.Sentences)
+            //    _sentences.Enqueue(sentence);
             
-            if (_sentences.Count > 0) DisplayNextSentence();
+            //if (_sentences.Count > 0) DisplayNextSentence();
         }
 
         public void DisplayThought(Thought thought)
@@ -85,7 +84,7 @@ namespace Neuromorph
         
         private void DisplayNextSentence()
         {
-            _currentSentence = _sentences.Dequeue();
+            //_currentSentence = _sentences.Dequeue();
             StopAllCoroutines();
             SetState(ConState.Typing);
             StartCoroutine(TypeSentence());
@@ -94,7 +93,7 @@ namespace Neuromorph
         private IEnumerator TypeSentence()
         {
             _dialogueText.text = "";
-            foreach (char letter in _currentSentence.Text)
+            foreach (char letter in _currentSentence)
             {
                 _dialogueText.text += letter;
                 yield return new WaitForSeconds(_textSpeed);
@@ -105,7 +104,7 @@ namespace Neuromorph
         private void SkipTyping()
         {
             StopAllCoroutines();
-            _dialogueText.text = _currentSentence.Text;
+            _dialogueText.text = _currentSentence;
             EndOfSentence();
         }
 
@@ -114,8 +113,8 @@ namespace Neuromorph
             Thought thought = BrainManager.Instance.ChosenThought;
             if (!thought) return;
             
-            DialogueSO dialogue = thought.ThoughtData.TriggeredDialogue;
-            if (dialogue) StartDialogue(dialogue);
+            //DialogueSO dialogue = thought.ThoughtData.TriggeredDialogue;
+            //if (dialogue) StartDialogue(dialogue);
             else GameManager.ChangeState<MoveState>();
             
             BrainManager.Instance.DestroyThought(thought);
@@ -125,15 +124,15 @@ namespace Neuromorph
 
         private void EndOfSentence()
         {
-            _currentSentence.DialogueEvent.TrySpawnThought();
+            //_currentSentence.DialogueEvent.TrySpawnThought();
 
-            if (_sentences.Count == 0)
+            /*if (_sentences.Count == 0)
             {
                 SetState(_currentDialogueSo.IsAwaitingThought
                     ? ConState.TransitionToAwaitThought
                     : ConState.Ended);
             }
-            else SetState(ConState.AwaitClick);
+            else SetState(ConState.AwaitClick);*/
         }
         
         private void SetState(ConState newState) => State = newState;

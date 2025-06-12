@@ -9,22 +9,22 @@ namespace Neuromorph.UI
     public class MenuThought: MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _text;
-        private ThoughtSO _thoughtData;
+        private string _thoughtName;
 
         private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(OnButtonClick);
         }
 
-        public void Init(ThoughtSO thoughtData)
+        public void Init(string thoughtName)
         {
-            _thoughtData = thoughtData;
-            _text.text = _thoughtData.NameValue;
+            _thoughtName = thoughtName;
+            _text.text = _thoughtName;
         }
 
         private void OnButtonClick()
         {
-            BrainManager.Instance.SpawnThought(_thoughtData);
+            BrainManager.Instance.SpawnThought(_thoughtName);
         }
     }
 }

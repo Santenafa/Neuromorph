@@ -9,7 +9,6 @@ namespace Neuromorph.Dialogues
 {
     public class Thought : MonoBehaviour, IPointerDownHandler, IDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        public bool isRB;
         public ThoughtSO ThoughtData { get; private set; }
         [Header("----- Colors -----")]
         [SerializeField] private Color _draggingColor;
@@ -44,12 +43,15 @@ namespace Neuromorph.Dialogues
             if (_targetPos != Vector2.zero)
                 _rBody.MovePosition(_targetPos);
         }
-        
-        public void Init(ThoughtSO data, Bounds spawnBounds)
+        public void Init(string thoughtName, Bounds spawnBounds)
         {
-            ThoughtData = data;
-            _thoughtText.text = ThoughtData.NameValue;
+            _thoughtText.text = thoughtName;
+            SpawnInBrain(spawnBounds);
+            WordsManager.Instance.TryAddMenuThought(thoughtName);
+        }
 
+        private void SpawnInBrain(Bounds spawnBounds)
+        {
             LayoutRebuilder.ForceRebuildLayoutImmediate(_thoughtImage.rectTransform);
             Vector2 size = _thoughtImage.rectTransform.rect.size;
             
@@ -65,7 +67,6 @@ namespace Neuromorph.Dialogues
             float y = Random.Range(spawnBounds.min.y + thoughtBounds.extents.y, spawnBounds.max.y - thoughtBounds.extents.y);
             
             transform.position = new Vector3(x, y, 0f);
-            WordsManager.Instance.TryAddMenuThought(data);
         }
         
 

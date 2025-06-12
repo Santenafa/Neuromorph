@@ -122,7 +122,7 @@ namespace Neuromorph
             ""id"": ""f124f7bf-4a97-45da-83b9-8d38c3714f46"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""Open Menu"",
                     ""type"": ""Button"",
                     ""id"": ""c39ef85f-2e6c-4bff-ade3-51f66d257ce1"",
                     ""expectedControlType"": ""Button"",
@@ -135,11 +135,11 @@ namespace Neuromorph
                 {
                     ""name"": """",
                     ""id"": ""6f323119-fc92-4647-8dcd-1c796b78096c"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""New action"",
+                    ""groups"": ""Player"",
+                    ""action"": ""Open Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -171,7 +171,7 @@ namespace Neuromorph
             m_Gameplay_ClickMove = m_Gameplay.FindAction("Click Move", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-            m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
+            m_UI_OpenMenu = m_UI.FindAction("Open Menu", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -287,12 +287,12 @@ namespace Neuromorph
         // UI
         private readonly InputActionMap m_UI;
         private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-        private readonly InputAction m_UI_Newaction;
+        private readonly InputAction m_UI_OpenMenu;
         public struct UIActions
         {
             private @PlayerInput m_Wrapper;
             public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Newaction => m_Wrapper.m_UI_Newaction;
+            public InputAction @OpenMenu => m_Wrapper.m_UI_OpenMenu;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -302,16 +302,16 @@ namespace Neuromorph
             {
                 if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-                @Newaction.started += instance.OnNewaction;
-                @Newaction.performed += instance.OnNewaction;
-                @Newaction.canceled += instance.OnNewaction;
+                @OpenMenu.started += instance.OnOpenMenu;
+                @OpenMenu.performed += instance.OnOpenMenu;
+                @OpenMenu.canceled += instance.OnOpenMenu;
             }
 
             private void UnregisterCallbacks(IUIActions instance)
             {
-                @Newaction.started -= instance.OnNewaction;
-                @Newaction.performed -= instance.OnNewaction;
-                @Newaction.canceled -= instance.OnNewaction;
+                @OpenMenu.started -= instance.OnOpenMenu;
+                @OpenMenu.performed -= instance.OnOpenMenu;
+                @OpenMenu.canceled -= instance.OnOpenMenu;
             }
 
             public void RemoveCallbacks(IUIActions instance)
@@ -345,7 +345,7 @@ namespace Neuromorph
         }
         public interface IUIActions
         {
-            void OnNewaction(InputAction.CallbackContext context);
+            void OnOpenMenu(InputAction.CallbackContext context);
         }
     }
 }

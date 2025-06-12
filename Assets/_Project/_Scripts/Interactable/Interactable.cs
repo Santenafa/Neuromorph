@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Neuromorph
 {
-    public abstract class Interactable : MonoBehaviour, IInteractable
+    public abstract class Interactable : MonoBehaviour
     {
         public Vector3 InteractPoint => _interactPoint.position;
         [SerializeField] private Transform _interactPoint;

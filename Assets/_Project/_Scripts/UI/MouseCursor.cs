@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Neuromorph.UI
@@ -19,7 +20,7 @@ namespace Neuromorph.UI
         private void Update()
         {
             transform.position = Input.mousePosition;// + _cursorHotspot;
-            bool isInsideBrain = CameraManager.IsInsideWorldUI();
+            bool isInsideBrain = EventSystem.current.IsPointerOverGameObject();
 
             if (_isInsideBrain == isInsideBrain) return;
             

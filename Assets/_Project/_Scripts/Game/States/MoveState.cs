@@ -1,4 +1,4 @@
-using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Neuromorph
 {
@@ -6,25 +6,17 @@ namespace Neuromorph
     {
         public override void OnEnter()
         {
-            SetMoveAndTalk(true);
+            GameManager.Player.SetCanMove(true);
         }
         public override void OnExit()
         {
-            SetMoveAndTalk(false);
+            GameManager.Player.SetCanMove(false);
         }
 
         public override void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0)) GameManager.Player.ClickToMove();
-        }
-
-        private static void SetMoveAndTalk(bool value)
-        {
-            GameManager.Player.SetCanMove(value);
-            
-            foreach (DialogueComponent dialogue in FindObjectsOfType<DialogueComponent>()) {
-                dialogue.CanTalk = value;
-            }
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+                GameManager.Player.ClickToMove();
         }
     }
 }

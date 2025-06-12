@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Neuromorph.Dialogues
 {
@@ -10,6 +9,6 @@ namespace Neuromorph.Dialogues
         public string NameValue = "Nothing";
         public string PromoText = "I want nothing...";
         
-        public DialogueSO TriggeredDialogue;
+        public TextAsset TriggeredDialogue;
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Neuromorph.Utilities;
 
 namespace Neuromorph.Dialogues
 {
@@ -12,13 +11,12 @@ namespace Neuromorph.Dialogues
             private set
             {
                 _chosenThought?.SetState(ThoughtState.Idle);
-
                 _chosenThought = value;
-
-                if (_talkState.State == ConState.AwaitThought)
+                
+                if (_dialogueState.IsAwaitThought)
                 {
-                    value?.SetState(ThoughtState.Chosen);
-                    _talkState.DisplayThought(_chosenThought);
+                    _chosenThought?.SetState(ThoughtState.Chosen);
+                    _dialogueState.DisplayThought(_chosenThought);
                 }
             }
         }
@@ -27,17 +25,16 @@ namespace Neuromorph.Dialogues
         [SerializeField] private Collider2D _spawnCollider;
         [SerializeField] private Transform _spawnPoint;
         private readonly List<Thought> _thoughtsInMouth = new();
-        private TalkState _talkState;
+        private DialogueState _dialogueState;
 
         private void Start()
         {
-            _talkState = GameManager.GetState<TalkState>();
+            _dialogueState = GameManager.GetState<DialogueState>();
         }
-
-        public void SpawnThought(ThoughtSO data)
+        public void SpawnThought(string thought)
         {
             Instantiate(_thoughtPrefab, _spawnPoint.position, Quaternion.identity, _spawnPoint)
-                .Init(data, _spawnCollider.bounds);
+                .Init(thought, _spawnCollider.bounds);
         }
 
         public void AddInMouth(Thought thought)

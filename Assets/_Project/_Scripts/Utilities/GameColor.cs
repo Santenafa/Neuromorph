@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Neuromorph.Utilities
+namespace Neuromorph
 {
     public static class GameColor
     {

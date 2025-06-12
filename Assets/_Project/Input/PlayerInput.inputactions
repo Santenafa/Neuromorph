@@ -98,7 +98,7 @@
             "id": "f124f7bf-4a97-45da-83b9-8d38c3714f46",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Open Menu",
                     "type": "Button",
                     "id": "c39ef85f-2e6c-4bff-ade3-51f66d257ce1",
                     "expectedControlType": "Button",
@@ -111,11 +111,11 @@
                 {
                     "name": "",
                     "id": "6f323119-fc92-4647-8dcd-1c796b78096c",
-                    "path": "",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "New action",
+                    "groups": "Player",
+                    "action": "Open Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

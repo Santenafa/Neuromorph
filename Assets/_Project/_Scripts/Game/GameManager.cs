@@ -1,42 +1,35 @@
 using System;
-using Neuromorph.Utilities;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Neuromorph
 {
     public class GameManager : Singleton<GameManager>
     {
-        public BaseGameState CurrentState { get; private set; }
         public static Puppet Player => Instance._player;
         [SerializeField] private Puppet _player;
         [SerializeField] private BaseGameState[] _gameStates;
         public static event Action<BaseGameState> OnBeforeStateChanged;
         public static event Action<BaseGameState> OnAfterStateChanged;
+        private BaseGameState _currentState;
         protected override void Awake()
         {
             base.Awake();
-            CurrentState = GetState<StartingState>();
-            CurrentState?.OnEnter();
+            _currentState = GetState<StartingState>();
+            _currentState?.OnEnter();
         }
 
-        public void Update()
-        {
-            CurrentState.OnUpdate();
-            if (Keyboard.current.escapeKey.isPressed) Application.Quit();
-        }
-
-        public void FixedUpdate() => CurrentState.OnFixedUpdate();
+        public void Update() => _currentState.OnUpdate();
+        public void FixedUpdate() => _currentState.OnFixedUpdate();
 
         public static T ChangeState<T>()
         {
             var newState = GetState<T>() as BaseGameState;
-            if (!newState || newState == Instance.CurrentState) return default;
+            if (!newState || newState == Instance._currentState) return default;
             
             OnBeforeStateChanged?.Invoke(newState);
             
-            Instance.CurrentState?.OnExit();
-            Instance.CurrentState = newState;
+            Instance._currentState?.OnExit();
+            Instance._currentState = newState;
             newState.OnEnter();
 
             OnAfterStateChanged?.Invoke(newState);
@@ -52,7 +45,11 @@ namespace Neuromorph
             }
             return default;
         }
-        
+
+        public static bool IsCurrentState<T>()
+        {
+            return Instance._currentState is T;
+        }
         public static bool IsPlayer(Collider other)
         {
             return other.TryGetComponent(out Puppet puppet)  && puppet == Player;

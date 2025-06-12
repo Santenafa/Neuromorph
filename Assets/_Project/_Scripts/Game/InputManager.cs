@@ -1,10 +1,9 @@
-using Neuromorph.Utilities;
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace Neuromorph
 {
-    public class InputManager: Singleton<InputManager>, PlayerInput.IGameplayActions
+    public class InputManager: Singleton<InputManager>, PlayerInput.IGameplayActions, PlayerInput.IUIActions
     {
         [SerializeField] private Puppet _puppet;
         private PlayerInput _input;
@@ -29,14 +28,14 @@ namespace Neuromorph
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Q)
+            /*if (Input.GetKeyDown(KeyCode.Q)
                 && _puppet.TryGetComponent(out PossessionComponent possession)
                 && possession.TryPossess(out Puppet puppet))
             {
                 PossessionComponent.UnPossess(_puppet); //Memory Wipe
                 _puppet = puppet;
                 print("new puppet: " + puppet.name);
-            }
+            }*/
         }
 
         public void OnMove(CallbackContext context)
@@ -46,7 +45,13 @@ namespace Neuromorph
 
         public void OnClickMove(CallbackContext context)
         {
-            //if (context.started) GameManager.Player.ClickToMove();
+            //if (context.started && GameManager.IsCurrentState<MoveState>())
+            //  GameManager.Player.ClickToMove();
+        }
+
+        public void OnOpenMenu(CallbackContext context)
+        {
+            if (context.started) Application.Quit();
         }
     }
 }
