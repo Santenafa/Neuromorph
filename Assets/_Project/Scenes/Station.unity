@@ -809,6 +809,7 @@ GameObject:
   m_Component:
   - component: {fileID: 113829049}
   - component: {fileID: 113829050}
+  - component: {fileID: 113829051}
   m_Layer: 0
   m_Name: Dialogue State
   m_TagString: Untagged
@@ -843,12 +844,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a35a48f7f541fb9e02ba2ce1e08460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textSpeed: 0.05
+  _textPauses: 0.05
+  _typeSpeed: 15
   _continueButton: {fileID: 128172467}
   _dialogueAnimator: {fileID: 127094883}
   _dialogueText: {fileID: 276139276}
   _nameBox: {fileID: 2062582436}
   _nameText: {fileID: 1052746388}
+  _typeWriter: {fileID: 113829051}
+--- !u!114 &113829051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113829048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54eea9956ef84119b8288f935269ec78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textUI: {fileID: 276139276}
 --- !u!224 &127094881 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8074248880026422712, guid: 97797e43e804fab459435d5e8c1e9ef5,

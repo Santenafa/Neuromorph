@@ -10,10 +10,12 @@ namespace Neuromorph
     public class DialogueState: BaseGameState
     {
         public bool IsAwaitThought { get; private set; }
+        private bool _isTyping;
         
         [Header("-------- Properties --------")]
         //[SerializeField] private TextMeshProUGUI _dialogueTextDisplay;
-        [SerializeField] private float _textSpeed;
+        [SerializeField] private float _textPauses = 0.05f;
+        [SerializeField] private float _typeSpeed = 15f;
         
         [Header("-------- Components --------")]
         [SerializeField] private Button _continueButton;
@@ -31,6 +33,7 @@ namespace Neuromorph
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
         
         private Story _currentStory;
+        [SerializeField] private TMP_Typewriter _typeWriter;
 
         private void Start()
         {
@@ -84,15 +87,16 @@ namespace Neuromorph
                 ExitDialogue();
                 return;
             }
-            
-            _dialogueText.text = nextLine;
-            
+
+            _isTyping = true;
+            _typeWriter.Play(nextLine, _typeSpeed,() => _isTyping = false);
             InkHandlers.HandleTags(_currentStory.currentTags);
         }
         
         private void OnButtonClick()
         {
             if (IsAwaitThought) AcceptThought();
+            else if (_isTyping) SkipDialogue();
             else ContinueStory();
         }
 
@@ -100,6 +104,11 @@ namespace Neuromorph
         {
             string displayText = thought ? thought.ThoughtData.PromoText : ChooseText;
             _dialogueText.text = $"<color={GameColor.PARASITE}>{displayText}</color>";
+        }
+
+        private void SkipDialogue()
+        {
+            _typeWriter.Skip();
         }
         
         private void AcceptThought()

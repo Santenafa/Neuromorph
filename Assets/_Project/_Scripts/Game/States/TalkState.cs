@@ -75,12 +75,6 @@ namespace Neuromorph
             
             //if (_sentences.Count > 0) DisplayNextSentence();
         }
-
-        public void DisplayThought(Thought thought)
-        {
-            string displayText = thought ? thought.ThoughtData.PromoText : ChooseText;
-            _dialogueText.text = $"<color={GameColor.PARASITE}>{displayText}</color>";
-        }
         
         private void DisplayNextSentence()
         {
@@ -124,8 +118,6 @@ namespace Neuromorph
 
         private void EndOfSentence()
         {
-            //_currentSentence.DialogueEvent.TrySpawnThought();
-
             /*if (_sentences.Count == 0)
             {
                 SetState(_currentDialogueSo.IsAwaitingThought
