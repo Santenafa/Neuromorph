@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace Neuromorph
@@ -28,6 +29,9 @@ namespace Neuromorph
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            if (Input.GetKeyDown(KeyCode.C)) Application.Quit();
+
             /*if (Input.GetKeyDown(KeyCode.Q)
                 && _puppet.TryGetComponent(out PossessionComponent possession)
                 && possession.TryPossess(out Puppet puppet))
@@ -51,7 +55,7 @@ namespace Neuromorph
 
         public void OnOpenMenu(CallbackContext context)
         {
-            if (context.started) Application.Quit();
+            //if (context.started) Application.Quit();
         }
     }
 }

@@ -1,10 +1,10 @@
+using DG.Tweening;
 using UnityEngine.UI;
 using Ink.Runtime;
 using Neuromorph.Dialogues;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Neuromorph
 {
@@ -14,7 +14,11 @@ namespace Neuromorph
         [SerializeField] private float _typeSpeed = 15f;
         
         [Header("-------- Animator --------")]
-        [SerializeField] private Animator _dialogueAnimator;
+        [SerializeField] private RectTransform _dialogueRect;
+        [SerializeField] private LayoutElement _choiceBox;
+        [SerializeField] private float _dialogueOpenSpeed = 2f;
+        private float _openDialoguePosY;
+        private float _closeDialoguePosY;
         
         [Header("-------- Line Display --------")]
         [SerializeField] private Button _continueButton;
@@ -28,9 +32,6 @@ namespace Neuromorph
         [Header("-------- Name --------")]
         [SerializeField] private GameObject _nameBox;
         [SerializeField] private TMP_Text _nameText;
-        
-        // -------- Constants --------
-        private static readonly int IsOpen = Animator.StringToHash("IsOpen");
         
         // -------- Private --------
         private Story _currentStory;
@@ -48,10 +49,17 @@ namespace Neuromorph
         {
             _continueButton.onClick.AddListener(OnContinueButton);
             _choiceButton.onClick.AddListener(OnChoiceButton);
+            
             _continueButton.interactable = false;
             _choiceButton.gameObject.SetActive(false);
             _canClickIcon.SetActive(false);
+            _choiceBox.gameObject.SetActive(false);
+            
             _typeWriter = new TMP_Typewriter(_dialogueText);
+            
+            _openDialoguePosY = _dialogueRect.anchoredPosition.y;
+            _closeDialoguePosY = _dialogueRect.anchoredPosition.y - _dialogueRect.rect.height * 2;
+            _dialogueRect.anchoredPosition = new Vector2(_dialogueRect.anchoredPosition.x, _closeDialoguePosY);
         }
 
         private void Update()
@@ -64,12 +72,12 @@ namespace Neuromorph
         public override void OnEnter()
         {
             _continueButton.interactable = true;
-            _dialogueAnimator.SetBool(IsOpen, true);
+            _dialogueRect.DOAnchorPosY(_openDialoguePosY, _dialogueOpenSpeed);
         }
         public override void OnExit()
         {
             _continueButton.interactable = false;
-            _dialogueAnimator.SetBool(IsOpen, false);
+            _dialogueRect.DOAnchorPosY(_closeDialoguePosY, _dialogueOpenSpeed);
         }
 
         //========== Enter / Exit ==========
@@ -132,7 +140,17 @@ namespace Neuromorph
         //========== Choosing ==========
         private void UpdateChoiceMode()
         {
-            //TODO: Open/Close Choice Animation
+            if (IsChoosing)
+            {
+                _choiceBox.gameObject.SetActive(true);
+                _choiceBox.DOFlexibleSize(new Vector2(50f, 0f) , _dialogueOpenSpeed);
+            }
+            else
+            {
+                _choiceBox.DOFlexibleSize(Vector2.zero , _dialogueOpenSpeed)
+                    .OnComplete(() => _choiceBox.gameObject.SetActive(false));
+            }
+            
             _continueButton.interactable = !IsChoosing;
             _canClickIcon.SetActive(false);
             ThoughtChooseArea.SetMouth(IsChoosing);
@@ -142,7 +160,7 @@ namespace Neuromorph
         {
             if (!(IsChoosing && thought))
             {
-                Hide();
+                HideChoiceButton();
                 return;
             }
             
@@ -158,18 +176,17 @@ namespace Neuromorph
 
             if (rightChoice != null)
             {
-                InkHandlers.HandleChoices(rightChoice.text, out string keyWord, out string promoLine);
+                InkHandlers.HandleChoices(rightChoice.text, out string _, out string promoLine);
 
                 _chooseIndex = rightChoice.index;
                 _choiceButton.gameObject.SetActive(true);
                 _choiceText.text = $"<color={GameColor.PARASITE}>{promoLine}</color>";
                 thought.SetState(ThoughtState.Chosen);
             }
-            else Hide();
+            else HideChoiceButton();
 
             return;
-
-            void Hide()
+            void HideChoiceButton()
             {
                 _chooseIndex = null;
                 _choiceButton.gameObject.SetActive(false);

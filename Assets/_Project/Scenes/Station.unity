@@ -799,12 +799,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!95 &98748511 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3021234606167831445, guid: 97797e43e804fab459435d5e8c1e9ef5,
-    type: 3}
-  m_PrefabInstance: {fileID: 632229686}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &113829048
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,7 +844,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _typeSpeed: 20
-  _dialogueAnimator: {fileID: 98748511}
+  _dialogueRect: {fileID: 1935162155}
+  _choiceBox: {fileID: 1213838687}
+  _dialogueOpenSpeed: 1
   _continueButton: {fileID: 1496319232}
   _dialogueText: {fileID: 1856956737}
   _canClickIcon: {fileID: 1399090129}
@@ -1761,6 +1757,12 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!224 &344987135 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1210214227310898250, guid: 97797e43e804fab459435d5e8c1e9ef5,
+    type: 3}
+  m_PrefabInstance: {fileID: 632229686}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &353824769
 Mesh:
   m_ObjectHideFlags: 0
@@ -5424,7 +5426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb4745d6a54c48c4a8696d29557bdf17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _thoughtsSpawn: {fileID: 0}
+  _thoughtsSpawn: {fileID: 344987135}
   _menuThoughtPrefab: {fileID: 4799348993297277410, guid: 468a60958c6e8a842ac044c1f76080b7,
     type: 3}
 --- !u!1001 &632229686
@@ -5559,11 +5561,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4773246672792630117, guid: 97797e43e804fab459435d5e8c1e9ef5,
-        type: 3}
-      propertyPath: m_Name
-      value: Image - Can Click Icon
       objectReference: {fileID: 0}
     - target: {fileID: 5097778692366552140, guid: 97797e43e804fab459435d5e8c1e9ef5,
         type: 3}
@@ -5729,6 +5726,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8580157330928936322, guid: 97797e43e804fab459435d5e8c1e9ef5,
+        type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9102635844694174411, guid: 97797e43e804fab459435d5e8c1e9ef5,
         type: 3}
@@ -11396,6 +11398,18 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1213838687 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1087050178604380841, guid: 97797e43e804fab459435d5e8c1e9ef5,
+    type: 3}
+  m_PrefabInstance: {fileID: 632229686}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1232620247
 Mesh:
   m_ObjectHideFlags: 0
@@ -14638,6 +14652,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!224 &1935162155 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8074248880026422712, guid: 97797e43e804fab459435d5e8c1e9ef5,
+    type: 3}
+  m_PrefabInstance: {fileID: 632229686}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1947724043
 Mesh:
   m_ObjectHideFlags: 0
