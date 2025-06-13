@@ -6,8 +6,8 @@ namespace Neuromorph.Dialogues
 {
     public static class InkHandlers
     {
-        // -------- Constants --------
-        private const string SPEAKER_TAG = "speaker";
+        // -------- Tags --------
+        private const string CHOICE = "choice";
         
         public static string HandleNames(string currentLine, GameObject nameBox, TMP_Text nameText)
         {
@@ -22,6 +22,19 @@ namespace Neuromorph.Dialogues
 
             return line;
         }
+        public static bool HandleChoices(string choiceLine, out string keyWord, out string promoLine)
+        {
+            string[] splitChoice = choiceLine.Split(':');
+            if (splitChoice.Length == 2)
+            {
+                keyWord = splitChoice[0].Trim();
+                promoLine = splitChoice[1].Trim();
+                return true;
+            }
+            keyWord = "Error";
+            promoLine = "Error";
+            return false;
+        }
         
         public static void HandleTags(List<string> currentTags)
         {
@@ -35,7 +48,7 @@ namespace Neuromorph.Dialogues
 
                 switch (tagKey)
                 {
-                    case SPEAKER_TAG:
+                    case CHOICE:
                         
                         break;
                     default: Debug.LogWarning($"Tag is not handled: {tagKey}"); break;

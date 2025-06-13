@@ -24,7 +24,7 @@ namespace Neuromorph.UI
 
         private void OnButtonClick()
         {
-            BrainManager.Instance.SpawnThought(_thoughtName);
+            BrainManager.Instance.SpawnThoughts(_thoughtName);
         }
     }
 }

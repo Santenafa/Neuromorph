@@ -167,14 +167,34 @@ ScriptedImporter:
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
-    border: {x: 21, y: 13, z: 22, w: 11}
+    border: {x: 16, y: 16, z: 16, w: 16}
     rect:
       serializedVersion: 2
       x: 500
       y: 76
-      width: 80
+      width: 48
       height: 48
     spriteID: ad425d92a3dd31241bb7db013a977072
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: Next_Line
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 564
+      y: 76
+      width: 16
+      height: 16
+    spriteID: acb46cfdab94bcd4fae514e4cb42d22e
     spriteBone: []
     spriteOutline: []
     vertices: []

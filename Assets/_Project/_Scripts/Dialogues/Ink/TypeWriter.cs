@@ -5,31 +5,17 @@ using UnityEngine;
 
 namespace Neuromorph.Dialogues
 {
-    public class TMP_Typewriter : MonoBehaviour
+    public class TMP_Typewriter
 	{
-		[SerializeField] private TMP_Text _textUI;
-
-		//==============================================================================
-		// 変数
-		//==============================================================================
+		public bool IsTyping { get; private set; }
+		private readonly TMP_Text _textUI;
 		private string _parsedText;
 		private Action _onComplete;
 		private Tween _tween;
 
-		//==============================================================================
-		// 関数
-		//==============================================================================
-		/// <summary>
-		/// アタッチされた時や Reset された時に呼び出されます
-		/// </summary>
-		private void Reset()
-		{
-			//_textUI = GetComponent<TMP_Text>();
-		}
+		public TMP_Typewriter(TMP_Text textUI) =>
+			_textUI = textUI;
 
-		/// <summary>
-		/// 破棄される時に呼び出されます
-		/// </summary>
 		private void OnDestroy()
 		{
 			_tween?.Kill();
@@ -37,82 +23,71 @@ namespace Neuromorph.Dialogues
 			_onComplete = null;
 		}
 
-		/// <summary>
-		/// 演出を再生します
-		/// </summary>
-		/// <param name="text">表示するテキスト ( リッチテキスト対応 )</param>
-		/// <param name="speed">表示する速さ ( speed == 1 の場合 1 文字の表示に 1 秒、speed == 2 の場合 0.5 秒かかる )</param>
-		/// <param name="onComplete">演出完了時に呼び出されるコールバック</param>
-		public void Play( string text, float speed, Action onComplete )
+		/// <summary> Start new typewriter effect </summary>
+		/// <param name="text"> Text to display (rich text supported) </param>
+		/// <param name="speed">Display speed (if speed == 1, it takes 1 second to display one character,
+		/// if speed == 2, it takes 0.5 seconds)</param>
+		/// <param name="onComplete">A callback that is called when typewriting is completed.</param>
+		/// /// <param name="ease"> Ease method for typing animation</param>
+		public void Play(string text, float speed, Action onComplete = null, Ease ease = Ease.Linear)
 		{
+			IsTyping = true;
 			_textUI.text = text;
 			_onComplete = onComplete;
 
+			//force regeneration of the text object before its normal process time
 			_textUI.ForceMeshUpdate();
-
-			_parsedText = _textUI.GetParsedText();
+			
+			//get the text after it has been parsed and rich text tags removed.
+			_parsedText = _textUI.GetParsedText(); 
 
 			int length = _parsedText.Length;
 			float duration = 1 / speed * length;
 
-			OnUpdate( 0 );
+			OnUpdate(0);
 
 			_tween?.Kill();
 
 			_tween = DOTween
-				.To( OnUpdate, 0, 1, duration )
-				.SetEase( Ease.Linear )
-				.OnComplete( OnComplete )
+				.To(OnUpdate, 0, 1, duration)
+				.SetEase(ease)
+				.OnComplete(OnComplete)
 			;
 		}
 
-		/// <summary>
-		/// 演出をスキップします
-		/// </summary>
-		/// <param name="withCallbacks">演出完了時に呼び出されるコールバックを実行する場合 true</param>
-		public void Skip( bool withCallbacks = true )
+		/// <summary> Skip typing animation </summary>
+		/// <param name="withCallbacks"> is calling Callback when typing is skipped</param>
+		public void Skip(bool withCallbacks = true)
 		{
 			_tween?.Kill();
-
 			_tween = null;
+			IsTyping = false;
 
-			OnUpdate( 1 );
+			OnUpdate(1);
 
-			if ( !withCallbacks ) return;
+			if (!withCallbacks) return;
 
 			_onComplete?.Invoke();
-
 			_onComplete = null;
 		}
 
-		/// <summary>
-		/// 演出を一時停止します
-		/// </summary>
 		public void Pause() => _tween?.Pause();
-		
-
-		/// <summary>
-		/// 演出を再開します
-		/// </summary>
 		public void Resume() => _tween?.Play();
 		
 
-		/// <summary>
-		/// 演出を更新する時に呼び出されます
-		/// </summary>
-		private void OnUpdate( float value )
+		/// <summary> Updating max visible characters </summary>
+		/// <param name="value"> (0-1) How much of the line is visible </param>
+		private void OnUpdate(float value)
 		{
-			float current = Mathf.Lerp( 0, _parsedText.Length, value );
-			int count = Mathf.FloorToInt( current );
+			float current = Mathf.Lerp(0, _parsedText.Length, value);
+			int count = Mathf.FloorToInt(current);
 
 			_textUI.maxVisibleCharacters = count;
 		}
 
-		/// <summary>
-		/// 演出が更新した時に呼び出されます
-		/// </summary>
 		private void OnComplete()
 		{
+			IsTyping = false;
 			_tween = null;
 			_onComplete?.Invoke();
 			_onComplete = null;

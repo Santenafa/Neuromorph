@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,19 +6,17 @@ namespace Neuromorph.Dialogues
 {
     public class BrainManager: Singleton<BrainManager>
     {
+        public static event Action<Thought> OnChosenThought;
         public Thought ChosenThought
         {
-            get => _chosenThought;
-            private set
+            get => _chosenThought; private set
             {
-                _chosenThought?.SetState(ThoughtState.Idle);
-                _chosenThought = value;
+                if (value == _chosenThought) return;
                 
-                if (_dialogueState.IsAwaitThought)
-                {
-                    _chosenThought?.SetState(ThoughtState.Chosen);
-                    _dialogueState.DisplayThought(_chosenThought);
-                }
+                _chosenThought?.SetState(ThoughtState.Idle);
+                
+                _chosenThought = value;
+                OnChosenThought?.Invoke(_chosenThought);
             }
         }
         private Thought _chosenThought;
@@ -25,16 +24,14 @@ namespace Neuromorph.Dialogues
         [SerializeField] private Collider2D _spawnCollider;
         [SerializeField] private Transform _spawnPoint;
         private readonly List<Thought> _thoughtsInMouth = new();
-        private DialogueState _dialogueState;
-
-        private void Start()
+        
+        public void SpawnThoughts(string thoughts)
         {
-            _dialogueState = GameManager.GetState<DialogueState>();
-        }
-        public void SpawnThought(string thought)
-        {
-            Instantiate(_thoughtPrefab, _spawnPoint.position, Quaternion.identity, _spawnPoint)
-                .Init(thought, _spawnCollider.bounds);
+            string[] splitThoughts = thoughts.Split(',');
+            
+            foreach (string thought in splitThoughts)
+                Instantiate(_thoughtPrefab, _spawnPoint.position, Quaternion.identity, _spawnPoint)
+                    .Init(thought.Trim(), _spawnCollider.bounds);
         }
 
         public void AddInMouth(Thought thought)

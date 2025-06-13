@@ -9,7 +9,7 @@ namespace Neuromorph.Dialogues
 {
     public class Thought : MonoBehaviour, IPointerDownHandler, IDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        public ThoughtSO ThoughtData { get; private set; }
+        public string Name { get; private set; }
         [Header("----- Colors -----")]
         [SerializeField] private Color _draggingColor;
         [SerializeField] private Color _chosenColor;
@@ -46,6 +46,7 @@ namespace Neuromorph.Dialogues
         public void Init(string thoughtName, Bounds spawnBounds)
         {
             _thoughtText.text = thoughtName;
+            Name = thoughtName;
             SpawnInBrain(spawnBounds);
             WordsManager.Instance.TryAddMenuThought(thoughtName);
         }

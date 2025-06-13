@@ -1,1 +1,0 @@
-EXTERNAL spawnThought(name)

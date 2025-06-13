@@ -5,17 +5,21 @@ namespace Neuromorph.Dialogues
     public static class InkExternalFunctions
     {
         // -------- Constants --------
-        private const string SPAWN_THOUGHT_FUNC = "spawnThought";
+        private const string SPAWN_THOUGHTS = "spawnThoughts";
         
-        public static void Bind(Story story)
+        
+        public static void Bind(Story story, DialogueState dialogueState)
         {
-            story.BindExternalFunction(SPAWN_THOUGHT_FUNC, 
-                (string thoughtName) => BrainManager.Instance.SpawnThought(thoughtName));
+            story.BindExternalFunction(SPAWN_THOUGHTS, 
+                (string thoughtName) => BrainManager.Instance.SpawnThoughts(thoughtName));
         }
         
         public static void Unbind(Story story)
         {
-            story.UnbindExternalFunction(SPAWN_THOUGHT_FUNC);
+            string[] funcToUnbind = {SPAWN_THOUGHTS};
+            
+            foreach (string func in funcToUnbind)
+                story.UnbindExternalFunction(func);
         }
     }
 }
