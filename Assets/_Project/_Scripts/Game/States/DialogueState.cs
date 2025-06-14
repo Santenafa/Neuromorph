@@ -5,18 +5,21 @@ using Neuromorph.Dialogues;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Neuromorph
 {
     public class DialogueState: BaseGameState
     {
+        [FormerlySerializedAs("_typeDuration")]
         [Header("-------- Properties --------")]
-        [SerializeField] private float _typeSpeed = 15f;
+        [SerializeField] private float _typeSpeed = 10f;
+        [SerializeField] private float _dialogueOpenDuration = 0.5f;
+        [SerializeField] private float _chooseBoxOpenDuration = 0.5f;
         
         [Header("-------- Animator --------")]
         [SerializeField] private RectTransform _dialogueRect;
         [SerializeField] private LayoutElement _choiceBox;
-        [SerializeField] private float _dialogueOpenSpeed = 2f;
         private float _openDialoguePosY;
         private float _closeDialoguePosY;
         
@@ -36,13 +39,14 @@ namespace Neuromorph
         // -------- Private --------
         private Story _currentStory;
         private TMP_Typewriter _typeWriter;
-        private bool IsChoosing => _currentStory.currentChoices.Count > 0;
+        private bool CanContinue => _currentStory && _currentStory.canContinue;
+        private bool IsChoosing => _currentStory && _currentStory.currentChoices.Count > 0;
         private int? _chooseIndex;
 
         //========== MonoBehavior ==========
-        private void Awake() =>
+        private void OnEnable() =>
             BrainManager.OnChosenThought += SetChoice;
-        private void OnDestroy() =>
+        private void OnDisable() =>
             BrainManager.OnChosenThought -= SetChoice;
         
         private void Start()
@@ -53,31 +57,33 @@ namespace Neuromorph
             _continueButton.interactable = false;
             _choiceButton.gameObject.SetActive(false);
             _canClickIcon.SetActive(false);
-            _choiceBox.gameObject.SetActive(false);
+            _choiceBox.flexibleWidth = 0;
             
             _typeWriter = new TMP_Typewriter(_dialogueText);
             
             _openDialoguePosY = _dialogueRect.anchoredPosition.y;
             _closeDialoguePosY = _dialogueRect.anchoredPosition.y - _dialogueRect.rect.height * 2;
-            _dialogueRect.anchoredPosition = new Vector2(_dialogueRect.anchoredPosition.x, _closeDialoguePosY);
-        }
-
-        private void Update()
-        {
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
-                OnContinueButton();
+            _dialogueRect.anchoredPosition
+                = new Vector2(_dialogueRect.anchoredPosition.x, _closeDialoguePosY);
         }
         
         //========== Base State ==========
         public override void OnEnter()
         {
             _continueButton.interactable = true;
-            _dialogueRect.DOAnchorPosY(_openDialoguePosY, _dialogueOpenSpeed);
+            _dialogueRect.DOAnchorPosY(_openDialoguePosY, _dialogueOpenDuration);
         }
         public override void OnExit()
         {
             _continueButton.interactable = false;
-            _dialogueRect.DOAnchorPosY(_closeDialoguePosY, _dialogueOpenSpeed);
+            _dialogueRect.DOAnchorPosY(_closeDialoguePosY, _dialogueOpenDuration);
+        }
+        public override void OnUpdate()
+        {
+            if (!Keyboard.current.spaceKey.wasPressedThisFrame) return;
+            
+            OnContinueButton();
+            OnChoiceButton();
         }
 
         //========== Enter / Exit ==========
@@ -86,21 +92,22 @@ namespace Neuromorph
             _currentStory = new Story(inkJson.text);
             InkExternalFunctions.Bind(_currentStory, this);
             UpdateDialogueBox();
+            GameManager.ChangeState<DialogueState>(); //On Enter logic
         }
         
         private void ExitDialogue()
         {
             InkExternalFunctions.Unbind(_currentStory);
-            GameManager.ChangeState<MoveState>();
+            GameManager.ChangeState<MoveState>(); //On Exit logic
         }
         
         //========== Buttons ==========
         private void OnContinueButton()
         {
-            if (_typeWriter.IsTyping)
-                _typeWriter.Skip();
-            else if (_currentStory.canContinue)
-                UpdateDialogueBox();
+            if (IsChoosing) return;
+
+            if (_typeWriter.IsTyping) _typeWriter.Skip();
+            else if (CanContinue) UpdateDialogueBox();
             else ExitDialogue();
         }
         /// <summary> Make Choice </summary>
@@ -123,34 +130,37 @@ namespace Neuromorph
             string rawLine = _currentStory.Continue();
             string newLine = InkHandlers.HandleNames(rawLine, _nameBox, _nameText);
 
-            if (newLine.Equals("") && !_currentStory.canContinue)
+            if (newLine.Equals("") && !CanContinue)
             {
                 ExitDialogue();
                 return;
             }
 
             _typeWriter.Play(newLine, _typeSpeed, () => {
-                if (!IsChoosing) _canClickIcon.SetActive(true);
+                if (!IsChoosing && CanContinue) _canClickIcon.SetActive(true);
             });
             InkHandlers.HandleTags(_currentStory.currentTags);
             
-            UpdateChoiceMode();
+            if (IsChoosing) EnterChoiceMode();
+            else ExitChoiceMode();
         }
         
         //========== Choosing ==========
+        private void EnterChoiceMode()
+        {
+            _choiceBox.DOFlexibleSize(new Vector2(50f, 0f) , _chooseBoxOpenDuration);
+            UpdateChoiceMode();
+        }
+        private void ExitChoiceMode()
+        {
+            _choiceBox.DOFlexibleSize(Vector2.zero , _chooseBoxOpenDuration)
+                .OnComplete(() =>
+                {
+                    UpdateChoiceMode();
+                });
+        }
         private void UpdateChoiceMode()
         {
-            if (IsChoosing)
-            {
-                _choiceBox.gameObject.SetActive(true);
-                _choiceBox.DOFlexibleSize(new Vector2(50f, 0f) , _dialogueOpenSpeed);
-            }
-            else
-            {
-                _choiceBox.DOFlexibleSize(Vector2.zero , _dialogueOpenSpeed)
-                    .OnComplete(() => _choiceBox.gameObject.SetActive(false));
-            }
-            
             _continueButton.interactable = !IsChoosing;
             _canClickIcon.SetActive(false);
             ThoughtChooseArea.SetMouth(IsChoosing);

@@ -6,9 +6,10 @@ using UnityEngine;
 namespace Neuromorph.Dialogues
 {
     public class TMP_Typewriter
-	{
-		public bool IsTyping { get; private set; }
-		private readonly TMP_Text _textUI;
+    {
+	    public bool IsTyping => _tween != null && _tween.IsPlaying();
+
+	    private readonly TMP_Text _textUI;
 		private string _parsedText;
 		private Action _onComplete;
 		private Tween _tween;
@@ -31,7 +32,6 @@ namespace Neuromorph.Dialogues
 		/// /// <param name="ease"> Ease method for typing animation</param>
 		public void Play(string text, float speed, Action onComplete = null, Ease ease = Ease.Linear)
 		{
-			IsTyping = true;
 			_textUI.text = text;
 			_onComplete = onComplete;
 
@@ -61,7 +61,6 @@ namespace Neuromorph.Dialogues
 		{
 			_tween?.Kill();
 			_tween = null;
-			IsTyping = false;
 
 			OnUpdate(1);
 
@@ -87,7 +86,6 @@ namespace Neuromorph.Dialogues
 
 		private void OnComplete()
 		{
-			IsTyping = false;
 			_tween = null;
 			_onComplete?.Invoke();
 			_onComplete = null;

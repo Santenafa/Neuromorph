@@ -10,7 +10,7 @@ namespace Neuromorph.Dialogues
         
         public static void Bind(Story story, DialogueState dialogueState)
         {
-            story.BindExternalFunction(SPAWN_THOUGHTS, 
+            story?.BindExternalFunction(SPAWN_THOUGHTS, 
                 (string thoughtName) => BrainManager.Instance.SpawnThoughts(thoughtName));
         }
         
@@ -19,7 +19,7 @@ namespace Neuromorph.Dialogues
             string[] funcToUnbind = {SPAWN_THOUGHTS};
             
             foreach (string func in funcToUnbind)
-                story.UnbindExternalFunction(func);
+                story?.UnbindExternalFunction(func);
         }
     }
 }

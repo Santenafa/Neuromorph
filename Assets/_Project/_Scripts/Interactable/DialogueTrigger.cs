@@ -19,9 +19,8 @@ namespace Neuromorph
         public override void Interact()
         { 
             if (IsTalking) return;
-            GameManager
-                .ChangeState<DialogueState>()
-                .EnterDialogue(_inkJson); //OnEnter logic call
+            GameManager.GetState<DialogueState>()
+                .EnterDialogue(_inkJson);
             _dialogueIcon.SetActive(false);
         }
 
