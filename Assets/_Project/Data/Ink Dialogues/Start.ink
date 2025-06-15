@@ -5,13 +5,13 @@ INCLUDE globals.ink
 === knotName ===
 Me: Hello Angel!
 Angel: I'm messenger of the All Father.
-~spawnThoughts("memmory, love, hate")
+~spawnThoughts("memory, love, hate")
 Memmory, Hate, Love...
-+ [memmory: I remember...something...] -> memmory
++ [memory: I remember...something...] -> memory
 + [love: Lovers...] -> love
 + [hate: Haters...] -> hate
 
-=== memmory ===
+=== memory ===
 But I don't want to
 -> END
 

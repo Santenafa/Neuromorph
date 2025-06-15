@@ -1,4 +1,3 @@
-using Neuromorph.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,9 +6,15 @@ using Random = UnityEngine.Random;
 
 namespace Neuromorph.Dialogues
 {
-    public class Thought : MonoBehaviour, IPointerDownHandler, IDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+    public class Thought : MonoBehaviour,
+        IPointerUpHandler, IPointerDownHandler,
+        IDragHandler, IDropHandler, IEndDragHandler,
+        IPointerEnterHandler, IPointerExitHandler
     {
         public string Name { get; private set; }
+        [Header("----- Filter -----")]
+        [SerializeField] private ContactFilter2D _contactFilter;
+        
         [Header("----- Colors -----")]
         [SerializeField] private Color _draggingColor;
         [SerializeField] private Color _chosenColor;
@@ -18,7 +23,7 @@ namespace Neuromorph.Dialogues
         [SerializeField] private TMP_Text _thoughtText;
         [SerializeField] private Image _thoughtImage;
         [SerializeField] private Outline _outline;
-        [SerializeField] private BoxCollider2D[] _collidersToResize;
+        [SerializeField] private BoxCollider2D _colliderToResize;
         
         [Header("----- Audio -----")]
         [SerializeField] private AudioClip _placeSFX;
@@ -27,16 +32,19 @@ namespace Neuromorph.Dialogues
         
         private ThoughtState _state = ThoughtState.Idle;
         private Rigidbody2D _rBody;
+        private Collider2D _collider;
         private Vector2 _mouseOffset;
         private RectTransform _rectTransform;
         private Canvas _canvas;
         private Vector2 _targetPos = Vector2.zero;
+        private bool _canFuse;
         
         private void Awake()
         {
             _rBody = GetComponent<Rigidbody2D>();
             _audioSource = GetComponent<AudioSource>();
             _rectTransform = GetComponent<RectTransform>();
+            _collider = GetComponent<Collider2D>();
         }
         private void FixedUpdate()
         {
@@ -47,39 +55,42 @@ namespace Neuromorph.Dialogues
         {
             _thoughtText.text = thoughtName;
             Name = thoughtName;
-            SpawnInBrain(spawnBounds);
-            WordsManager.Instance.TryAddMenuThought(thoughtName);
+            SetPositionInBrain(spawnBounds);
         }
 
-        private void SpawnInBrain(Bounds spawnBounds)
+        private void SetPositionInBrain(Bounds spawnBounds)
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(_thoughtImage.rectTransform);
             Vector2 size = _thoughtImage.rectTransform.rect.size;
             
-            BoxCollider2D[] colliders = _collidersToResize;
-            foreach (BoxCollider2D col in colliders)
-                col.size = size;
+            _colliderToResize.size = size;
             
             SetState(ThoughtState.Idle);
             
-            Bounds thoughtBounds = colliders[0].bounds;
+            Bounds thoughtBounds = _colliderToResize.bounds;
 
             float x = Random.Range(spawnBounds.min.x + thoughtBounds.extents.x, spawnBounds.max.x - thoughtBounds.extents.x);
             float y = Random.Range(spawnBounds.min.y + thoughtBounds.extents.y, spawnBounds.max.y - thoughtBounds.extents.y);
             
             transform.position = new Vector3(x, y, 0f);
         }
-        
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (eventData.button != PointerEventData.InputButton.Left) return;
+
+            
+        }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Right) {
-                Remove();
-            } else {
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
                 _mouseOffset = (Vector2)transform.position - GetMousePos();
                 _targetPos = GetMousePos() + _mouseOffset;
                 gameObject.transform.SetAsLastSibling();
             }
+            else Remove();
         }
         public void OnDrag(PointerEventData eventData)
         {
@@ -87,13 +98,28 @@ namespace Neuromorph.Dialogues
         }
         public void OnEndDrag(PointerEventData eventData)
         {
-            //concept.fuse = 3f;
             _targetPos = Vector2.zero;
         }
 
         public void OnDrop(PointerEventData eventData)
         {
-            //play place sound
+            var results = new Collider2D[5];
+            int number = Physics2D.OverlapCollider(_collider, _contactFilter, results);
+
+            if (number <= 0) return;
+            
+            foreach (Collider2D col in results)
+            {
+                if (col != null
+                    && col.TryGetComponent(out Thought thought)
+                    && BrainManager
+                        .TryFuse(Name, thought.Name))
+                {
+                    thought.Remove();
+                    Remove();
+                }
+            }
+            //TODO: play place sound
         }
         public void OnPointerEnter(PointerEventData eventData)
         {

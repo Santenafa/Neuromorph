@@ -1,0 +1,4 @@
+,hate,love,memory
+hate,,memory/hate,love
+love,memory/hate,,hate
+memory,love,hate,

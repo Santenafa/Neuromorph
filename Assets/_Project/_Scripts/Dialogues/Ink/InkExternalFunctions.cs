@@ -11,7 +11,7 @@ namespace Neuromorph.Dialogues
         public static void Bind(Story story, DialogueState dialogueState)
         {
             story?.BindExternalFunction(SPAWN_THOUGHTS, 
-                (string thoughtName) => BrainManager.Instance.SpawnThoughts(thoughtName));
+                (string thoughtNames) => BrainManager.SpawnThoughts(thoughtNames));
         }
         
         public static void Unbind(Story story)

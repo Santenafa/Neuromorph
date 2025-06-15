@@ -135,9 +135,9 @@ namespace Neuromorph
                 ExitDialogue();
                 return;
             }
-
+            
             _typeWriter.Play(newLine, _typeSpeed, () => {
-                if (!IsChoosing && CanContinue) _canClickIcon.SetActive(true);
+                _canClickIcon.SetActive(!IsChoosing);
             });
             InkHandlers.HandleTags(_currentStory.currentTags);
             
@@ -148,7 +148,7 @@ namespace Neuromorph
         //========== Choosing ==========
         private void EnterChoiceMode()
         {
-            _choiceBox.DOFlexibleSize(new Vector2(50f, 0f) , _chooseBoxOpenDuration);
+            _choiceBox.DOFlexibleSize(new Vector2(0.5f, 0f) , _chooseBoxOpenDuration);
             UpdateChoiceMode();
         }
         private void ExitChoiceMode()
@@ -162,7 +162,7 @@ namespace Neuromorph
         private void UpdateChoiceMode()
         {
             _continueButton.interactable = !IsChoosing;
-            _canClickIcon.SetActive(false);
+            if (IsChoosing) _canClickIcon.SetActive(false);
             ThoughtChooseArea.SetMouth(IsChoosing);
         }
         

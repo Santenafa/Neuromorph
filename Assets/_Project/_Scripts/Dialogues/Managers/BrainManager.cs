@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Neuromorph.Dialogues.Data;
 using UnityEngine;
 
 namespace Neuromorph.Dialogues
@@ -24,14 +25,29 @@ namespace Neuromorph.Dialogues
         [SerializeField] private Collider2D _spawnCollider;
         [SerializeField] private Transform _spawnPoint;
         private readonly List<Thought> _thoughtsInMouth = new();
+
+        public static bool TryFuse(string a, string b)
+        {
+            if (!RecipesManager.TryGetResults(a, b, out string[] results)) return false;
+            
+            foreach (string result in results) SpawnThoughts(result);
+            return true;
+        }
         
-        public void SpawnThoughts(string thoughts)
+        public static void SpawnThoughts(string thoughts)
         {
             string[] splitThoughts = thoughts.Split(',');
-            
+
             foreach (string thought in splitThoughts)
-                Instantiate(_thoughtPrefab, _spawnPoint.position, Quaternion.identity, _spawnPoint)
-                    .Init(thought.Trim(), _spawnCollider.bounds);
+            {
+                string clearThought = thought.Trim();
+                
+                Instantiate(Instance._thoughtPrefab, Instance._spawnPoint.position,
+                    Quaternion.identity, Instance._spawnPoint
+                ).Init(clearThought, Instance._spawnCollider.bounds);
+                
+                MemoryManager.Instance.TryAddThoughts(clearThought);
+            }
         }
 
         public void AddInMouth(Thought thought)

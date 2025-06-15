@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Neuromorph.UI
+namespace Neuromorph
 {
     [RequireComponent(typeof(Button))]
     public class MenuThought: MonoBehaviour
@@ -24,7 +24,7 @@ namespace Neuromorph.UI
 
         private void OnButtonClick()
         {
-            BrainManager.Instance.SpawnThoughts(_thoughtName);
+            BrainManager.SpawnThoughts(_thoughtName);
         }
     }
 }

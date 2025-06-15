@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8284199705655684854}
   - component: {fileID: 4553606437510172991}
   - component: {fileID: 259706152509030597}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 2818501201949067801}
   - component: {fileID: 743394410357836794}
   - component: {fileID: 4624171717094440691}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Button - Thought
   m_TagString: Untagged
   m_Icon: {fileID: 0}
