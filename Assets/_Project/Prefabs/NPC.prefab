@@ -729,8 +729,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactPoint: {fileID: 2883996612964319593}
-  _dialogue: {fileID: 11400000, guid: 04a80cc913a0a87489e80e1ea5ed626e, type: 2}
-  _dialogueIcon: {fileID: 7984925838230988358}
+  _inkJson: {fileID: 0}
+  _dialogueIcon: {fileID: 4919926567510992320}
 --- !u!1 &6171878442939057294
 GameObject:
   m_ObjectHideFlags: 0
