@@ -2,24 +2,22 @@ using Ink.Runtime;
 
 namespace Neuromorph.Dialogues
 {
-    public static class InkExternalFunctions
+public static class InkExternalFunctions
+{
+    // -------- Constants --------
+    const string SPAWN_THOUGHTS = "spawnThoughts";
+    
+    public static void Bind(Story story, DialogueState dialogueState)
     {
-        // -------- Constants --------
-        private const string SPAWN_THOUGHTS = "spawnThoughts";
-        
-        
-        public static void Bind(Story story, DialogueState dialogueState)
-        {
-            story?.BindExternalFunction(SPAWN_THOUGHTS, 
-                (string thoughtNames) => BrainManager.SpawnThoughts(thoughtNames));
-        }
-        
-        public static void Unbind(Story story)
-        {
-            string[] funcToUnbind = {SPAWN_THOUGHTS};
-            
-            foreach (string func in funcToUnbind)
-                story?.UnbindExternalFunction(func);
-        }
+        story?.BindExternalFunction(SPAWN_THOUGHTS, 
+            (string thoughtNames) => BrainManager.Instance.SpawnThoughts(thoughtNames));
     }
-}
+    
+    public static void Unbind(Story story)
+    {
+        string[] funcToUnbind = {SPAWN_THOUGHTS};
+        
+        foreach (string func in funcToUnbind)
+            story?.UnbindExternalFunction(func);
+    }
+}}

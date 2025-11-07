@@ -4,30 +4,29 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace Neuromorph
 {
-    public class InputManager: Singleton<InputManager>, PlayerInput.IGameplayActions, PlayerInput.IUIActions
+    public class InputManager: MonoBehaviour, PlayerInput.IGameplayActions, PlayerInput.IUIActions
     {
-        [SerializeField] private Puppet _puppet;
-        private PlayerInput _input;
-        
-        private void OnEnable()
+        [SerializeField] Puppet _puppet;
+        PlayerInput _input;
+
+        void OnEnable()
         {
             _input.Gameplay.SetCallbacks(this);
             _input.Gameplay.Enable();
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             _input.Gameplay.SetCallbacks(this);
             _input.Gameplay.Disable();
         }
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             _input = new PlayerInput();
         }
 
-        private void Update()
+        void Update()
         {
             if (Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             if (Input.GetKeyDown(KeyCode.C)) Application.Quit();

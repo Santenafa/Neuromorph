@@ -5,26 +5,25 @@ using UnityEngine.UI;
 
 namespace Neuromorph
 {
-    [RequireComponent(typeof(Button))]
-    public class MenuThought: MonoBehaviour
+[RequireComponent(typeof(Button))]
+public class MenuThought: MonoBehaviour
+{
+    [SerializeField] TextMeshProUGUI _text;
+    string _thoughtName;
+
+    void Awake()
     {
-        [SerializeField] private TextMeshProUGUI _text;
-        private string _thoughtName;
-
-        private void Awake()
-        {
-            GetComponent<Button>().onClick.AddListener(OnButtonClick);
-        }
-
-        public void Init(string thoughtName)
-        {
-            _thoughtName = thoughtName;
-            _text.text = _thoughtName;
-        }
-
-        private void OnButtonClick()
-        {
-            BrainManager.SpawnThoughts(_thoughtName);
-        }
+        GetComponent<Button>().onClick.AddListener(OnButtonClick);
     }
-}
+
+    public void Init(string thoughtName)
+    {
+        _thoughtName = thoughtName;
+        _text.text = _thoughtName;
+    }
+
+    void OnButtonClick()
+    {
+        BrainManager.Instance.SpawnThoughts(_thoughtName);
+    }
+}}

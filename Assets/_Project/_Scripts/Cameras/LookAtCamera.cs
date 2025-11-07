@@ -2,30 +2,31 @@ using UnityEngine;
 
 namespace Neuromorph.Cameras
 {
-    public class LookAtCamera : MonoBehaviour
+public class LookAtCamera : MonoBehaviour
+{
+    [SerializeField] LookType _lookType = LookType.LookAtCamera;
+
+    enum LookType {LookAtCamera, CameraForward}
+
+    Transform _camera;
+
+    void Awake()
     {
-        [SerializeField] private LookType _lookType = LookType.LookAtCamera;
-        private enum LookType {LookAtCamera, CameraForward}
-        private Transform _camera;
+        _camera = Camera.main?.transform;
+    }
 
-        private void Start()
+    void LateUpdate()
+    {
+        switch (_lookType)
         {
-            _camera = CameraManager.MainCamera.transform;
-        }
-
-        private void LateUpdate()
-        {
-            switch (_lookType)
-            {
-                case LookType.LookAtCamera:
-                    transform.LookAt(_camera, Vector3.up);
-                    break;
-                case LookType.CameraForward:
-                    transform.forward
-                        = _camera.forward;
-                    break;
-                default: break;
-            }
+            case LookType.LookAtCamera:
+                transform.LookAt(_camera, Vector3.up);
+                break;
+            case LookType.CameraForward:
+                transform.forward
+                    = _camera.forward;
+                break;
+            default: break;
         }
     }
-}
+}}

@@ -2,13 +2,12 @@ using UnityEngine;
 
 namespace Neuromorph
 {
-    public class CameraManager : Singleton<CameraManager>
+    public class CameraManager : MonoBehaviour
     {
-        public static Camera MainCamera { get; private set; }
+        static Camera MainCamera;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             MainCamera = Camera.main;
         }
         
