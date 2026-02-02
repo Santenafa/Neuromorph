@@ -1,4 +1,5 @@
-,hate,love,memory
-hate,,memory/hate,love
-love,memory/hate,,hate
-memory,love,hate,
+,hate,love,memory,fear
+hate,,ambivalence,haunted,xenophobia
+love,ambivalence,,beloved,rejection
+memory,haunted,beloved,,nightmare
+fear,xenophobia,rejection,nightmare,

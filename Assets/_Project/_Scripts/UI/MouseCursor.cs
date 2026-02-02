@@ -4,22 +4,23 @@ using UnityEngine.UI;
 
 namespace Neuromorph.UI
 {
+    [RequireComponent(typeof(Image))]
     public class MouseCursor : MonoBehaviour
     {
-        [SerializeField] private Sprite _mainCursorSprite;
-        [SerializeField] private Sprite _wormCursorSprite;
-        private Image _mouseImage;
-        private bool _isInsideBrain;
+        [SerializeField] Sprite _mainCursorSprite;
+        [SerializeField] Sprite _wormCursorSprite;
+        Image _mouseImage;
+        bool _isInsideBrain;
 
-        private void Start()
+        void Start()
         {
             _mouseImage = GetComponent<Image>();
             Cursor.visible = false;
         }
 
-        private void Update()
+        void Update()
         {
-            transform.position = Input.mousePosition;// + _cursorHotspot;
+            transform.position = Input.mousePosition;
             bool isInsideBrain = EventSystem.current.IsPointerOverGameObject();
 
             if (_isInsideBrain == isInsideBrain) return;

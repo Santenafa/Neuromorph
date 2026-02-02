@@ -7,7 +7,7 @@ public static class InkExternalFunctions
     // -------- Constants --------
     const string SPAWN_THOUGHTS = "spawnThoughts";
     
-    public static void Bind(Story story, DialogueState dialogueState)
+    public static void Bind(Story story)
     {
         story?.BindExternalFunction(SPAWN_THOUGHTS, 
             (string thoughtNames) => BrainManager.Instance.SpawnThoughts(thoughtNames));

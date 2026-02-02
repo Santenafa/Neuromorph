@@ -85,9 +85,9 @@ public class Puppet: MonoBehaviour
 
     public void SetCanMove(bool value)
     {
-        if (value)
+        if (value) {
             _state = PuppetState.Idle;
-        else {
+        } else {
             _agent.ResetPath();
             _followTarget = null;
             _state = PuppetState.Talking;
@@ -107,4 +107,5 @@ public class Puppet: MonoBehaviour
         _followTarget = null;
         _agent.SetDestination(point);
     }
-}}
+}
+}

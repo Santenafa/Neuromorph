@@ -9,17 +9,17 @@ public class BrainManager: Singleton<BrainManager>
 {
     [SerializeField] MemoryManager _memoryManager;
     [SerializeField] RecipesManager _recipesManager;
-    public static event Action<Thought> OnChosenThought;
     public Thought ChosenThought
     {
-        get => _chosenThought; private set
+        get => _chosenThought;
+        private set
         {
             if (value == _chosenThought) return;
             
             _chosenThought?.SetState(ThoughtState.Idle);
             
             _chosenThought = value;
-            OnChosenThought?.Invoke(_chosenThought);
+            EventBus.OnChosenThought?.Invoke(_chosenThought);
         }
     }
 
@@ -73,4 +73,5 @@ public class BrainManager: Singleton<BrainManager>
         RemoveFromMouth(thought);
         Destroy(thought.gameObject);
     }
-}}
+}
+}

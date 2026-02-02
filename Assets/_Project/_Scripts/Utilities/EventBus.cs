@@ -1,11 +1,12 @@
 using System;
+using Neuromorph.Dialogues;
 using UnityEngine;
 
 namespace Neuromorph
 {
 public static class EventBus
 {
-    public static event Action OnPlayerDied;
-    public static Action<TextAsset> TryStartDialogue;
-    public static void SendPlayerDied() => OnPlayerDied?.Invoke();
-}}
+    public static Action<TextAsset> OnStartDialogue;
+    public static Action<Thought> OnChosenThought;
+}
+}
